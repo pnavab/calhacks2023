@@ -1,7 +1,7 @@
 """Base state for the app."""
 
 import reflex as rx
-from calhacks2023.backend.ai import *
+from calhacks2023.backend.ai import *   
 import random
 
 
@@ -20,6 +20,8 @@ class State(rx.State):
     question: str
     name: str
     show: bool = False
+    show_revert_button = False
+    index_to_revert : int = 0
     landing: bool = True
 
     forest: str = "A9A9A9"
@@ -78,14 +80,26 @@ class State(rx.State):
             theme = "cartoon"
         elif(self.medieval == "black"):
             theme = "medieval"
-        self.tabs.append(self.name)
-        self.chats[self.name] = [theme, [{"user": "I just spawned...", 'model': random.choice(
-            self.scenarios), "image_code": self.default_image_code}]]
-        self.show = not (self.show)
-        self.switch_tabs(self.name)
+        if not self.name in self.tabs:
+          self.tabs.append(self.name)
+          self.chats[self.name] = [theme, [{"user": "I just spawned...", 'model': random.choice(
+              self.scenarios), "image_code": self.default_image_code}]]
+          self.show = not (self.show)
+          self.switch_tabs(self.name)
+        else:
+            print("name already exists")
 
     def change(self):
         self.show = not (self.show)
+
+    def show_revert_modal(self, index):
+        self.show_revert_button = True
+        if index is not None: 
+            self.index_to_revert = index
+        print(self.show_revert_button)
+    
+    def close_revert_modal(self):
+        self.show_revert_button = False
 
     def switch_tabs(self, tab):
         self.cur_chat = tab
@@ -95,20 +109,21 @@ class State(rx.State):
         if key == 'Enter':
             self.answer()
 
-    def save_checkpoint(self, index):
-        print(f"double clicked, index is {index}")
+    def save_checkpoint(self):
+        # print(f"double clicked, index is {self.index}")
         # saves all the context from beginning up until selected point
         cur_chat_history = self.chat_history
         # flip the index since it is passed in flipped from the reverse function
-        index = len(cur_chat_history)-index
+        self.index_to_revert = len(cur_chat_history)-self.index_to_revert
         old_name = self.cur_chat
-        new_context = cur_chat_history[:index]
+        new_context = cur_chat_history[:self.index_to_revert]
         tab_index = self.tabs.index(old_name)
         self.tabs.pop(tab_index)
         self.name = f"Re: {self.cur_chat}"
         self.tabs.append(self.name)
         self.chats[self.name] = [self.chats[old_name][0], new_context]
         self.switch_tabs(self.name)
+        self.show_revert_button = False
         # cur_art_style = self.chats[self.cur_chat][0]
         # self.chats[new_name] = [cur_art_style, new_context]
 
@@ -145,3 +160,5 @@ class State(rx.State):
         self.ocean = "#A9A9A9"
         self.forest = "#A9A9A9"
         self.cartoon = "black"
+
+    

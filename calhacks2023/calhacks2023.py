@@ -13,4 +13,9 @@ app.api.add_api_route(
     path = "/",
     endpoint = root
 )
+
+app.api.add_api_route(
+  path = "/get-ai-response",
+  endpoint = get_ai_response
+)
 app.compile()

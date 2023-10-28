@@ -23,6 +23,7 @@ class State(rx.State):
     show_revert_button = False
     index_to_revert : int = 0
     landing: bool = True
+    
 
     forest: str = "A9A9A9"
     ocean: str = "A9A9A9"

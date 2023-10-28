@@ -53,7 +53,7 @@ def qa(question, answer, image_code, index) -> rx.Component:
                 text_align="left",
                 style=base_style.get("answer"),
             ),
-            style=stable_styles.get("answer_row")
+            style=stable_styles.get("answer_row"),
         ),
         travel_back_in_time(),
         on_double_click=State.show_revert_modal(index)

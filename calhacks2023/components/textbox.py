@@ -26,7 +26,6 @@ class FormState(State):
         # Our chatbot is not very smart right now...
         answer = get_ai_response(self.truncate_chat_history(), self.question)
         self.chat_history.append((self.question, answer))
-        self.ai_context.append({"user": self.question})
 
     def handle_submit(self, form_data: dict):
         """Handle the form submit."""

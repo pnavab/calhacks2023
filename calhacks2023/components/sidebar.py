@@ -2,17 +2,14 @@
 
 from calhacks2023 import styles
 from calhacks2023.state import State
-from calhacks2023.components.textbox import FormState
-
 import reflex as rx
-
-class saveData():
-    url = ""
-    state = None
-
-class SideBarState(State):
-    instances = []
     
+class ModalState(State):
+    show: bool = False
+
+    def change(self):
+        self.show = not (self.show)
+
 def sidebar_header() -> rx.Component:
     """Sidebar header.
 
@@ -52,7 +49,28 @@ def add_sidebar_item() -> rx.Component:
     # Whether the item is active.
 
     return rx.link(
-        rx.button("New Story"),
+        rx.button("Start anew", on_click=ModalState.change),
+        rx.modal(
+        rx.modal_overlay(
+            rx.modal_content(
+                rx.modal_header("Confirm"),
+                rx.modal_body(
+                    "Do you want to confirm example?"
+                ),
+                rx.modal_footer(
+                    rx.box(
+                        rx.button(
+                        "Confirm", on_click=ModalState.change,
+                    ), padding = "0.5rem"
+                    ),
+                    rx.button(
+                        "Close", on_click=ModalState.change
+                    )
+                ),
+            )
+        ),
+        is_open=ModalState.show,
+        ),
         overflow_y="auto",
         align_items="flex-start",
         padding="0.5em",

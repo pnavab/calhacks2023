@@ -34,8 +34,9 @@ def get_ai_response(context: list, prompt):
 # context.append({"user": "the boy runs away", "model": response})
 # response = get_ai_response(context, "in a sudden turn of events, the boy knocks out the wolf")
 
-def get_ai_image(prompt):
-   response = together.Image.create(prompt=prompt, model="stabilityai/stable-diffusion-xl-base-1.0", width=800, height=800)
+def get_ai_image(prompt, art_style):
+   padded_prompt = f"in a {art_style} style, draw this scenario: '{prompt}'"
+   response = together.Image.create(prompt=padded_prompt, model="stabilityai/stable-diffusion-xl-base-1.0", width=1024, height=512)
    image = response["output"]["choices"][0]
    output = image["image_base64"]
   #  print(f"output is {output}")

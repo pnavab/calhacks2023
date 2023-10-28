@@ -22,6 +22,9 @@ class FormState(State):
     chat_history.append(("what is a person", "bro I dont know"))
     chat_history.append(("what is a person", "bro I dont know"))
 
+    def set_question(self, input):
+        self.question = input
+
     def answer(self):
         # Our chatbot is not very smart right now...
         answer = "I don't know!"
@@ -60,32 +63,32 @@ def action_bar() -> rx.Component:
     return rx.hstack(
         rx.input(
             placeholder="Ask a question",
-            on_change=State.set_question,
+            on_change=FormState.set_question,
             # style=style.input_style,
         ),
         rx.button(
             "Ask",
-            on_click=State.answer,
+            on_click=FormState.answer,
             # style=style.button_style,
         ),
     )
 
 
-def textbox():
-    return rx.vstack(
-        rx.form(
-            rx.vstack(
-                rx.input(
-                    placeholder="What do you do?",
-                    id="user_action",
-                    style=input_style,
-                ),
-                rx.button("Submit", type_="submit"),
-                style=box_style,
-            ),
-            on_submit=FormState.handle_submit,
-        ),
-        rx.divider(),
-        rx.heading("Results"),
-        rx.text(FormState.form_data.to_string()),
-    )
+# def textbox():
+#     return rx.vstack(
+#         rx.form(
+#             rx.vstack(
+#                 rx.input(
+#                     placeholder="What do you do?",
+#                     id="user_action",
+#                     style=input_style,
+#                 ),
+#                 rx.button("Submit", type_="submit"),
+#                 style=box_style,
+#             ),
+#             on_submit=FormState.handle_submit,
+#         ),
+#         rx.divider(),
+#         rx.heading("Results"),
+#         rx.text(FormState.form_data.to_string()),
+#     )

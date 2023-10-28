@@ -105,9 +105,6 @@ class State(rx.State):
             self.chats[self.name] = [theme, [
                 {"user": "I just spawned...", 'model': random_scenario, "image_code": image_code}]]
 
-            self.chats[self.name] = [theme, [{"user": "I just spawned...", 'model': random.choice(
-                self.scenarios), "image_code": self.default_image_code}]]
-
             self.show = not (self.show)
             self.switch_tabs(self.name)
         else:

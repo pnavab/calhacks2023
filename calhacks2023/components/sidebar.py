@@ -42,7 +42,8 @@ def add_sidebar_item() -> rx.Component:
     # Whether the item is active.
 
     return rx.link(
-        rx.button("Start anew", on_click=State.change),
+        rx.button("Start anew", on_click=State.change,
+                  style=styles.base_style.get("cool_buttons")),
         rx.modal(
             rx.modal_overlay(
                 rx.modal_content(

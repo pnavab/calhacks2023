@@ -56,7 +56,7 @@ def action_bar() -> rx.Component:
         rx.button(
             "Ask",
             on_click=State.answer,
-            # style=style.button_style,
+            style=base_style.get("cool_buttons"),
         ),
         style=stable_styles.get("action-style"),
     )

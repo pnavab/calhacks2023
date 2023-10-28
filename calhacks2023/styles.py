@@ -88,6 +88,10 @@ base_style = {
         "height": "550px",
         "overflow-y": "scroll",
         "display": "flex",
+        "flex-direction": "column-reverse",
+    },
+    "cool_buttons": {
+        "background-color": "lightgrey",
     }
 }
 

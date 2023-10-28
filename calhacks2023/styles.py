@@ -12,6 +12,7 @@ hover_accent_color = {"_hover": {"color": accent_color}}
 hover_accent_bg = {"_hover": {"bg": accent_color}}
 content_width_vw = "90vw"
 sidebar_width = "20em"
+background_color = "#434654"
 
 template_page_style = {"padding_top": "2em", "padding_x": ["auto", "2em"]}
 
@@ -36,13 +37,58 @@ overlapping_button_style = {
     "border_radius": border_radius,
 }
 
-base_style = {
-    rx.MenuButton: {
-        "width": "3em",
-        "height": "3em",
-        **overlapping_button_style,
+stable_styles = {
+    "question_row": {
+        "display": "flex",
+        "flex-direction": "row",
+        "justify-content": "right",
+        "margin": "10px 0px",
     },
-    rx.MenuItem: hover_accent_bg,
+    "answer_row": {
+        "display": "flex",
+        "flex-direction": "row",
+        "justify-content": "left",
+        "margin": "10px 0px",
+    },
+    "action-style": {
+        "width": "800px;",
+    }
+}
+
+base_style = {
+    "background_color": "#A4DDED",
+    "::-webkit-scrollbar":  {
+        "width": "12px;"  # Width of the scrollbar track */
+    },
+    "::-webkit-scrollbar-track": {
+        "background": "#f1f1f1;"  # /* Background color of the scrollbar track */
+    },
+    "::-webkit-scrollbar-thumb": {
+        "background": "#888;"  # /* Color of the scrollbar thumb */
+    },
+    "site-title": {
+        "font-size": "30px",
+        "text-align": "center",
+        "font-weight": "900",
+    },
+    "question": {
+        "max-width": "85%",
+        "background-color": "#999999",
+        "border-radius": "10px 10px 0px 10px",
+        "padding": "15px 15px",
+    },
+    "answer": {
+        "max-width": "85%",
+        "background-color": "#32c4a7",
+        "border-radius": "0px 10px 10px 10px",
+        "padding": "15px 15px",
+    },
+    "chat-style": {
+        "width": "100%",
+        "height": "550px",
+        "overflow-y": "scroll",
+        "display": "flex",
+    }
 }
 
 markdown_style = {

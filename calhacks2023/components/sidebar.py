@@ -4,6 +4,7 @@ from calhacks2023 import styles
 from calhacks2023.state import State
 import reflex as rx
 
+
 def sidebar_header() -> rx.Component:
     """Sidebar header.
 
@@ -12,9 +13,9 @@ def sidebar_header() -> rx.Component:
     """
     return rx.hstack(
         # The logo.
-        rx.image(
-            src="/icon.svg",
-            height="2em",
+        rx.box(
+            "Groundhog.Day",
+            style=styles.base_style.get("site-title")
         ),
         rx.spacer(),
         # Link to Reflex GitHub repo.
@@ -36,8 +37,6 @@ def sidebar_header() -> rx.Component:
     )
 
 
-
-
 def add_sidebar_item() -> rx.Component:
 
     # Whether the item is active.
@@ -45,27 +44,27 @@ def add_sidebar_item() -> rx.Component:
     return rx.link(
         rx.button("Start anew", on_click=State.change),
         rx.modal(
-        rx.modal_overlay(
-            rx.modal_content(
-                rx.modal_header("Confirm"),
-                 rx.input(
-            placeholder="Enter your story name:",
-            on_change=State.set_name,
-            # style=style.input_style,
-        ),
-                rx.modal_footer(
-                    rx.box(
-                        rx.button(
-                        "Start", on_click=State.create_new,
-                    ), padding = "0.5rem"
+            rx.modal_overlay(
+                rx.modal_content(
+                    rx.modal_header("Confirm"),
+                    rx.input(
+                        placeholder="Enter your story name:",
+                        on_change=State.set_name,
+                        # style=style.input_style,
                     ),
-                    rx.button(
-                        "Close", on_click=State.change
-                    )
-                ),
-            )
-        ),
-        is_open=State.show,
+                    rx.modal_footer(
+                        rx.box(
+                            rx.button(
+                                "Start", on_click=State.create_new,
+                            ), padding="0.5rem"
+                        ),
+                        rx.button(
+                            "Close", on_click=State.change
+                        )
+                    ),
+                )
+            ),
+            is_open=State.show,
         ),
         overflow_y="auto",
         align_items="flex-start",
@@ -74,6 +73,7 @@ def add_sidebar_item() -> rx.Component:
 # def save_and_close():
 #         State.create_new
 #         ModalState.change
+
 
 def sidebar_item(text: str) -> rx.Component:
     """Sidebar item.
@@ -117,6 +117,7 @@ def sidebar_item(text: str) -> rx.Component:
         width="100%",
     )
 
+
 def sidebar() -> rx.Component:
     """The sidebar.
 
@@ -133,7 +134,7 @@ def sidebar() -> rx.Component:
                     State.tabs.reverse(),
                     lambda tab: sidebar_item(
                         tab),
-                    ),
+                ),
                 width="100%",
                 overflow_y="auto",
                 align_items="flex-start",

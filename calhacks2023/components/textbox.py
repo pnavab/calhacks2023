@@ -1,7 +1,7 @@
 import reflex as rx
 from calhacks2023.state import State
 from calhacks2023.backend.ai import *
-from .styles import *
+from calhacks2023.styles import *
 
 
 def qa(question, answer, image_code) -> rx.Component:
@@ -11,9 +11,9 @@ def qa(question, answer, image_code) -> rx.Component:
                 question,
                 # The user's question is on the right.
                 text_align="right",
-                style=chat_style.get("question"),
+                style=base_style.get("question"),
             ),
-            style=chat_style.get("question_row")
+            style=stable_styles.get("question_row")
         ),
         rx.box(
             rx.image(src=f'data:image/png;base64,{image_code}')
@@ -23,9 +23,9 @@ def qa(question, answer, image_code) -> rx.Component:
                 answer,
                 # The answer is on the left.
                 text_align="left",
-                style=chat_style.get("answer"),
+                style=base_style.get("answer"),
             ),
-            style=chat_style.get("answer_row")
+            style=stable_styles.get("answer_row")
         ),
         on_click=State.save_checkpoint
     )
@@ -39,8 +39,9 @@ def chat() -> rx.Component:
             lambda messages: qa(
                 messages["user"], messages["model"], messages["image_code"]),
         ),
-        style=chat_style,
+        style=base_style.get("chat-style"),
     )
+
 
 def action_bar() -> rx.Component:
     return rx.hstack(
@@ -56,7 +57,7 @@ def action_bar() -> rx.Component:
             on_click=State.answer,
             # style=style.button_style,
         ),
-        style=action_style,
+        style=stable_styles.get("action-style"),
     )
 
 

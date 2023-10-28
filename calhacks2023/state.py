@@ -77,7 +77,6 @@ class State(rx.State):
             self.answer()
 
     def save_checkpoint(self, index):
-        
         print(f"double clicked, index is {index}")
         # saves all the context from beginning up until selected point
         cur_chat_history = self.chats[self.cur_chat][1]

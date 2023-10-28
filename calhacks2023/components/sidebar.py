@@ -63,6 +63,7 @@ def add_sidebar_item() -> rx.Component:
                     rx.menu_item("Medieval", color = State.medieval, on_click=State.toggle_medieval, close_on_select=False),
                     rx.menu_item("Forest", color = State.forest, on_click=State.toggle_forest, close_on_select=False),
                     rx.menu_item("Steampunk", color = State.steampunk, on_click=State.toggle_steampunk, close_on_select=False),
+                    rx.menu_item("Cartoon", color = State.cartoon, on_click=State.toggle_cartoon, close_on_select=False),
                     ),
                     match_width = True,
                     padding = "0.5em",

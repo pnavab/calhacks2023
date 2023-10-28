@@ -23,9 +23,10 @@ class State(rx.State):
     landing: bool = True
 
     forest: str = "A9A9A9"
-    ocean: str = "black"
+    ocean: str = "A9A9A9"
     medieval: str = "#A9A9A9"
     steampunk: str = "#A9A9A9"
+    cartoon: str = "#A9A9A9"
 
     cur_chat = "Default Story"
     tabs.append(cur_chat)
@@ -52,8 +53,8 @@ class State(rx.State):
             {"user": self.question, "model": "loading", "image_code": ""})
         ai_answer = get_ai_response(
             self.truncate_chat_history(), self.question)
-        print(f"answer is {ai_answer}")
-        image_code = get_ai_image(ai_answer, self.default_art_style)
+        image_code = get_ai_image(ai_answer, self.chats[self.cur_chat][0])
+        print(self.chats[self.cur_chat][0])
         self.chat_history[-1]["model"] = ai_answer
         self.chat_history[-1]["image_code"] = image_code
         self.question = ""
@@ -66,8 +67,19 @@ class State(rx.State):
         self.name = input
 
     def create_new(self):
+        theme = ""
+        if(self.forest == "black"):
+            theme = "forest"
+        elif(self.steampunk == "black"):
+            theme = "steampunk"
+        elif(self.ocean == "black"):
+            theme = "ocean"
+        elif(self.cartoon == "black"):
+            theme = "cartoon"
+        elif(self.medieval == "black"):
+            theme = "medieval"
         self.tabs.append(self.name)
-        self.chats[self.name] = ["cartoon", [{"user": "I just spawned...", 'model': random.choice(
+        self.chats[self.name] = [theme, [{"user": "I just spawned...", 'model': random.choice(
             self.scenarios), "image_code": self.default_image_code}]]
         self.show = not (self.show)
         self.switch_tabs(self.name)
@@ -99,26 +111,37 @@ class State(rx.State):
         self.switch_tabs(self.name)
         # cur_art_style = self.chats[self.cur_chat][0]
         # self.chats[new_name] = [cur_art_style, new_context]
+
     def toggle_forest(self):
         self.steampunk = "#A9A9A9"
         self.medieval = "#A9A9A9"
         self.ocean = "#A9A9A9"
         self.forest = "black"
+        self.cartoon = "#A9A9A9"
 
     def toggle_steampunk(self):
         self.steampunk = "black"
         self.medieval = "#A9A9A9"
         self.ocean = "#A9A9A9"
         self.forest = "#A9A9A9"
+        self.cartoon = "#A9A9A9"
     
     def toggle_ocean(self):
         self.steampunk = "#A9A9A9"
         self.medieval = "#A9A9A9"
         self.ocean = "black"
         self.forest = "#A9A9A9"
+        self.cartoon = "#A9A9A9"
 
     def toggle_medieval(self):
         self.steampunk = "#A9A9A9"
         self.medieval = "black"
         self.ocean = "#A9A9A9"
         self.forest = "#A9A9A9"
+        self.cartoon = "#A9A9A9"
+    def toggle_cartoon(self):
+        self.steampunk = "#A9A9A9"
+        self.medieval = "#A9A9A9"
+        self.ocean = "#A9A9A9"
+        self.forest = "#A9A9A9"
+        self.cartoon = "black"

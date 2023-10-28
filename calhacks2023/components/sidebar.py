@@ -4,6 +4,7 @@ from calhacks2023 import styles
 from calhacks2023.state import State
 import reflex as rx
 
+
 def sidebar_header() -> rx.Component:
     """Sidebar header.
 
@@ -12,9 +13,9 @@ def sidebar_header() -> rx.Component:
     """
     return rx.hstack(
         # The logo.
-        rx.image(
-            src="/icon.svg",
-            height="2em",
+        rx.box(
+            "Groundhog.Day",
+            style=styles.base_style.get("site-title")
         ),
         rx.spacer(),
         # Link to Reflex GitHub repo.
@@ -36,14 +37,13 @@ def sidebar_header() -> rx.Component:
     )
 
 
-
-
 def add_sidebar_item() -> rx.Component:
 
     # Whether the item is active.
 
     return rx.link(
-        rx.button("Start anew", on_click=State.change),
+        rx.button("Start anew", on_click=State.change,
+                  style=styles.base_style.get("cool_buttons")),
         rx.modal(
         rx.modal_overlay(
             rx.modal_content(
@@ -83,6 +83,7 @@ def add_sidebar_item() -> rx.Component:
 # def save_and_close():
 #         State.create_new
 #         ModalState.change
+
 
 def sidebar_item(text: str) -> rx.Component:
     """Sidebar item.
@@ -126,6 +127,7 @@ def sidebar_item(text: str) -> rx.Component:
         width="100%",
     )
 
+
 def sidebar() -> rx.Component:
     """The sidebar.
 
@@ -142,7 +144,7 @@ def sidebar() -> rx.Component:
                     State.tabs.reverse(),
                     lambda tab: sidebar_item(
                         tab),
-                    ),
+                ),
                 width="100%",
                 overflow_y="auto",
                 align_items="flex-start",

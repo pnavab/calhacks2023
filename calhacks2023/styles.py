@@ -61,7 +61,7 @@ stable_styles = {
 
 
 base_style = {
-    "transition": "5s",
+    "background-color": secondary_color,
     "::-webkit-scrollbar":  {
         "width": "10px;"  # Width of the scrollbar track */
     },
@@ -104,11 +104,13 @@ base_style = {
         "background-color": State.accent_color_three,
         "border-radius": "10px",
         "border": f"1px solid {secondary_color}",
-        "box_shadow": f"0px 0px 1px 0px {State.accent_color_one}",
+        "box_shadow": f"100px 100px 1px 0px {State.accent_color_one}",
         "padding": "10px 12px",
     },
     "chat-container": {
-        "border": f"1px solid {secondary_color}"
+        "border": f"1px solid {secondary_color}",
+        "padding": "20px",
+        "margin": "0px 0px 20px 20px"
     },
     "ask_button": {
         "background-color": State.accent_color_three,
@@ -118,7 +120,8 @@ base_style = {
         "padding": "10px",
         "margin-left": "10em",
         "margin-top": "2em",
-    }
+    },
+
 }
 
 markdown_style = {

@@ -14,20 +14,34 @@ class State(rx.State):
     tabs: list[str] = []
     chats: dict[str, list[str, list[dict[str, str]]]] = {}
 
-    scenarios = ["You are stranded on an island...", "You are in a dark forest...",
-                 "You are in a field...", "You are in a mansion..."]
+    scenarios = ["You are stranded on an island and don't remember how you got there. To your left is a coconut and a half sharpened rock that looks like someone else tried shaping into a knife. You hear a faint but aggressive pack of monkeys howling in the distance...", "You are lost in a forest, with no tools or weapons. You notice an old box near you, but are unsure whether you should open it...",
+                 "You wake up in a maze with walls 3 times your height. Suddenly, you notice a looming figure emerge from the shadows behind you. It seems to be holding a large club...", "You are in a mansion, yet it seems eerily quiet. It seems abandoned, and you seem to be the only one home yet don't remember how you got there..."]
 
     question: str
     name: str
     show: bool = False
+    show_revert_button = False
+    index_to_revert: int = 0
     landing: bool = True
 
     accent_color_one = "#a4dded"
     accent_color_two = "#A3C9A8"
-    accent_color_three = "#50808E"
+    accent_color_three = "lightgrey"
 
-    forest: str = "#A9A9A9"
-    ocean: str = "#A9A9A9"
+    gradient_string = f"linear-gradient(271.68deg, {accent_color_one} 0.75%, {accent_color_two} 88.52%)"
+    print(gradient_string)
+
+    def change_background_color(self, prompt):
+        colors = get_hex_codes(prompt)
+        self.accent_color_one = "#"+colors[0]
+        print(self.accent_color_one)
+        self.accent_color_two = "#"+colors[1]
+
+        self.gradient_string = f"linear-gradient(271.68deg, {self.accent_color_one} 0.75%, {self.accent_color_two} 88.52%)"
+        print(self.gradient_string)
+
+    forest: str = "A9A9A9"
+    ocean: str = "A9A9A9"
     medieval: str = "#A9A9A9"
     steampunk: str = "#A9A9A9"
     cartoon: str = "#A9A9A9"
@@ -62,6 +76,7 @@ class State(rx.State):
         self.chat_history[-1]["model"] = ai_answer
         self.chat_history[-1]["image_code"] = image_code
         self.question = ""
+        self.change_background_color(self.chat_history[-1]['model'])
 
     def handle_submit(self, form_data: dict):
         """Handle the form submit."""
@@ -82,14 +97,33 @@ class State(rx.State):
             theme = "cartoon"
         elif (self.medieval == "black"):
             theme = "medieval"
-        self.tabs.append(self.name)
-        self.chats[self.name] = [theme, [{"user": "I just spawned...", 'model': random.choice(
-            self.scenarios), "image_code": self.default_image_code}]]
-        self.show = not (self.show)
-        self.switch_tabs(self.name)
+        if not self.name in self.tabs:
+            self.tabs.append(self.name)
+
+            random_scenario = random.choice(self.scenarios)
+            image_code = get_ai_image(random_scenario, theme)
+            self.chats[self.name] = [theme, [
+                {"user": "I just spawned...", 'model': random_scenario, "image_code": image_code}]]
+
+            self.chats[self.name] = [theme, [{"user": "I just spawned...", 'model': random.choice(
+                self.scenarios), "image_code": self.default_image_code}]]
+
+            self.show = not (self.show)
+            self.switch_tabs(self.name)
+        else:
+            print("name already exists")
 
     def change(self):
         self.show = not (self.show)
+
+    def show_revert_modal(self, index):
+        self.show_revert_button = True
+        if index is not None:
+            self.index_to_revert = index
+        print(self.show_revert_button)
+
+    def close_revert_modal(self):
+        self.show_revert_button = False
 
     def switch_tabs(self, tab):
         self.cur_chat = tab
@@ -99,20 +133,21 @@ class State(rx.State):
         if key == 'Enter':
             self.answer()
 
-    def save_checkpoint(self, index):
-        print(f"double clicked, index is {index}")
+    def save_checkpoint(self):
+        # print(f"double clicked, index is {self.index}")
         # saves all the context from beginning up until selected point
         cur_chat_history = self.chat_history
         # flip the index since it is passed in flipped from the reverse function
-        index = len(cur_chat_history)-index
+        self.index_to_revert = len(cur_chat_history)-self.index_to_revert
         old_name = self.cur_chat
-        new_context = cur_chat_history[:index]
+        new_context = cur_chat_history[:self.index_to_revert]
         tab_index = self.tabs.index(old_name)
         self.tabs.pop(tab_index)
         self.name = f"Re: {self.cur_chat}"
         self.tabs.append(self.name)
         self.chats[self.name] = [self.chats[old_name][0], new_context]
         self.switch_tabs(self.name)
+        self.show_revert_button = False
         # cur_art_style = self.chats[self.cur_chat][0]
         # self.chats[new_name] = [cur_art_style, new_context]
 

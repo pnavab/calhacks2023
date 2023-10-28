@@ -1,21 +1,13 @@
 """The dashboard page."""
-from calhacks2023.templates import template
+from calhacks2023.templates import *
 
 import reflex as rx
+from calhacks2023.components.textbox import chat
 
 
-@template(route="/dashboard", title="Dashboard")
+@template(route="/Story", title="StoryPage")
 def dashboard() -> rx.Component:
-    """The dashboard page.
-
-    Returns:
-        The UI for the dashboard page.
-    """
     return rx.vstack(
-        rx.heading("Dashboard", font_size="3em"),
-        rx.text("Welcome to Reflex!"),
-        rx.text(
-            "You can edit this page in ",
-            rx.code("{your_app}/pages/dashboard.py"),
-        ),
+        rx.heading("StoryTeller", font_size="3em"),
+        chat(),
     )

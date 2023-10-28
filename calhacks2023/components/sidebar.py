@@ -47,12 +47,21 @@ def add_sidebar_item() -> rx.Component:
         rx.modal(
         rx.modal_overlay(
             rx.modal_content(
-                rx.modal_header("Confirm"),
+                rx.modal_header("What kind of story do you want to live?"),
                  rx.input(
-            placeholder="Enter your story name:",
-            on_change=State.set_name,
-            # style=style.input_style,
-        ),
+                placeholder="Enter your story name:",
+                on_change=State.set_name,
+                # style=style.input_style,
+                ),
+                rx.menu(
+                    rx.menu_button("Menu"),
+                    rx.menu_list(
+                    rx.menu_item("Example"),
+                    rx.menu_item("Example"),
+                    rx.menu_item("Example"),
+                    ),
+                    padding = "0.5em",
+                ),               
                 rx.modal_footer(
                     rx.box(
                         rx.button(

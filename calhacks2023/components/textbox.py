@@ -32,6 +32,7 @@ def qa(question, answer, image_code) -> rx.Component:
 
 
 def chat() -> rx.Component:
+    print(State.chats[State.cur_chat][1])
     return rx.box(
         rx.foreach(
             State.chat_history.reverse(),
@@ -41,12 +42,13 @@ def chat() -> rx.Component:
         style=chat_style,
     )
 
-
 def action_bar() -> rx.Component:
     return rx.hstack(
+
         rx.input(
             placeholder="Ask a question",
             on_change=State.set_question,
+            value=State.question,
             # style=style.input_style,
         ),
         rx.button(

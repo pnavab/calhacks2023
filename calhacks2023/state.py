@@ -8,18 +8,23 @@ class State(rx.State):
     The base state is used to store general vars used throughout the app.
     """
 # The current question being asked.
-    tabs = []
+    tabs : list[str] = []
     chats : dict[str, list[str, list[dict[str, str]]]] = {}
+
 
     question: str
     name: str
     show: bool = False
+    landing: bool = True
 
+    cur_chat = "Default Story"
+    tabs.append("Default Story")
     default_art_style = "cartoon"
     default_user_message = "I just spawned in"
     default_model_message = "You are lost in a forest, with no tools or weapons. You notice an old box near you, but are unsure whether you should open it..."
     default_image_code = get_ai_image(default_model_message, default_art_style)
 
+    chats[cur_chat] = [default_art_style, [{"user": default_user_message, "model": default_model_message, "image_code": default_image_code}]]
     # Keep track of the chat history as a list of (question, answer) tuples.
     chat_history: list[dict[str, str]] = [
         {"user": default_user_message, "model": default_model_message, "image_code": default_image_code}]
@@ -33,6 +38,7 @@ class State(rx.State):
         self.question = input
 
     def answer(self):
+        # self.chats[self.cur_chat][1] is the current chat's chat history
         self.chat_history.append(
             {"user": self.question, "model": "loading", "image_code": ""})
         ai_answer = get_ai_response(
@@ -41,6 +47,7 @@ class State(rx.State):
         image_code = get_ai_image(ai_answer, self.default_art_style)
         self.chat_history[-1]["model"] = ai_answer
         self.chat_history[-1]["image_code"] = image_code
+        self.question = ""
 
     def handle_submit(self, form_data: dict):
         """Handle the form submit."""
@@ -55,9 +62,13 @@ class State(rx.State):
 
     def create_new(self):
         self.tabs.append(self.name)
-        self.chats[self.name] = ["cartoon", {"user": "I just spawned", 'model': "You are stranded on an island..."}]
+        self.chats[self.name] = ["cartoon", {"user": "I just spawned", 'model': "You are stranded on an island...", "image_code": self.default_image_code}]
         self.show = not (self.show)
-
+        self.switch_tabs(self.name)
 
     def change(self):
         self.show = not (self.show)
+
+    def switch_tabs(self, tab):
+        self.cur_chat = tab
+        self.chat_history = self.chats[tab][1]

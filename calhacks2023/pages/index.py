@@ -7,7 +7,4 @@ from calhacks2023.pages import dashboard
 import reflex as rx
 
 def index() -> rx.Component:
-    if len(State.chats.keys) == 0:
-        return landing()
-    else:
-        return dashboard
+    return dashboard()

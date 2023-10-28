@@ -75,7 +75,7 @@ def add_sidebar_item() -> rx.Component:
 #         State.create_new
 #         ModalState.change
 
-def sidebar_item(text: str, url: str) -> rx.Component:
+def sidebar_item(text: str) -> rx.Component:
     """Sidebar item.
 
     Args:
@@ -113,7 +113,7 @@ def sidebar_item(text: str, url: str) -> rx.Component:
             width="100%",
             padding_x="1em",
         ),
-        href=url,
+        on_click=State.switch_tabs(text),
         width="100%",
     )
 
@@ -124,20 +124,16 @@ def sidebar() -> rx.Component:
         The sidebar component.
     """
     # Get all the decorated pages and add them to the sidebar.
-    from reflex.page import get_decorated_pages
     return rx.box(
         rx.vstack(
             sidebar_header(),
             add_sidebar_item(),
             rx.vstack(
-                *[
-                    sidebar_item(
-                        text=page.get("title", page["route"].strip("/").capitalize()),
-                        url=page["route"],
-                    )
-                    for page in get_decorated_pages()
-                    if page.get("title", page["route"].strip("/").capitalize()) != "Home"
-                ],
+                rx.foreach(
+                    State.tabs,
+                    lambda tab: sidebar_item(
+                        tab),
+                    ),
                 width="100%",
                 overflow_y="auto",
                 align_items="flex-start",

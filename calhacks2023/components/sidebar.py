@@ -108,20 +108,7 @@ def sidebar_item(text: str) -> rx.Component:
                 height="2.5em",
                 padding="0.5em",
             ),
-            bg=rx.cond(
-                active,
-                styles.accent_color,
-                "transparent",
-            ),
-            color=rx.cond(
-                active,
-                styles.accent_text_color,
-                styles.text_color,
-            ),
-            border_radius=styles.border_radius,
-            box_shadow=styles.box_shadow,
-            width="100%",
-            padding_x="1em",
+            style=styles.base_style.get("cool_buttons")
         ),
         on_click=State.switch_tabs(text),
         width="100%",

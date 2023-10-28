@@ -2,6 +2,7 @@
 
 import reflex as rx
 from calhacks2023.backend.ai import *
+import random
 class State(rx.State):
     """Base state for the app.
 
@@ -11,6 +12,7 @@ class State(rx.State):
     tabs : list[str] = []
     chats : dict[str, list[str, list[dict[str, str]]]] = {}
 
+    scenarios = ["You are stranded on an island...", "You are in a dark forest...","You are in a field...", "You are in a mansion..."]
 
     question: str
     name: str
@@ -20,7 +22,7 @@ class State(rx.State):
     cur_chat = "Default Story"
     tabs.append("Default Story")
     default_art_style = "cartoon"
-    default_user_message = "I just spawned in"
+    default_user_message = "I just spawned..."
     default_model_message = "You are lost in a forest, with no tools or weapons. You notice an old box near you, but are unsure whether you should open it..."
     default_image_code = get_ai_image(default_model_message, default_art_style)
 
@@ -62,8 +64,7 @@ class State(rx.State):
 
     def create_new(self):
         self.tabs.append(self.name)
-        self.chats[self.name] = ["cartoon", [{"user": "I just spawned", 'model': "You are stranded on an island...", "image_code": self.default_image_code}]]
-        self.chat_history = [{"user": self.default_user_message, "model": self.default_model_message, "image_code": self.default_image_code}]
+        self.chats[self.name] = ["cartoon", [{"user": "I just spawned...", 'model': random.choice(self.scenarios), "image_code": self.default_image_code}]]
         self.show = not (self.show)
         self.switch_tabs(self.name)
 
@@ -73,3 +74,7 @@ class State(rx.State):
     def switch_tabs(self, tab):
         self.cur_chat = tab
         self.chat_history = self.chats[tab][1]
+
+    def enter(self,key):
+        if key == 'Enter':
+            self.answer()

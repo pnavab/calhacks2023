@@ -62,7 +62,8 @@ class State(rx.State):
 
     def create_new(self):
         self.tabs.append(self.name)
-        self.chats[self.name] = ["cartoon", {"user": "I just spawned", 'model': "You are stranded on an island...", "image_code": self.default_image_code}]
+        self.chats[self.name] = ["cartoon", [{"user": "I just spawned", 'model': "You are stranded on an island...", "image_code": self.default_image_code}]]
+        self.chat_history = [{"user": self.default_user_message, "model": self.default_model_message, "image_code": self.default_image_code}]
         self.show = not (self.show)
         self.switch_tabs(self.name)
 

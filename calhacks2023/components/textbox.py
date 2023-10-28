@@ -32,7 +32,7 @@ def qa(question, answer, image_code) -> rx.Component:
 
 
 def chat() -> rx.Component:
-    print(State.chats[State.cur_chat][1])
+    print(type(State.chat_history))
     return rx.box(
         rx.foreach(
             State.chat_history.reverse(),

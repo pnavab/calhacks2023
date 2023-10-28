@@ -11,6 +11,9 @@ chat_style = {
     "question": {
         "max-width": "75%",
         "color": "red;",
+        "background-color": "lightblue",
+        "border-radius": "10px",
+        "padding": "5px 10px",
     },
     "answer_row": {
         "display": "flex",

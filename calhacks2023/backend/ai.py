@@ -11,17 +11,15 @@ def root():
 
 def get_ai_response(context: list, prompt):
   context_string = "\n".join([f"[INST] {item['user']} [/INST] {item['model']}" for item in context])
-  print(f"{context_string} [INST] {prompt}")
 
   response_json = together.Complete.create(
      model= "togethercomputer/llama-2-7b-chat",
-     prompt= f"Continue the story based on the following, but finish your answer somewhere the user can continue from: \n{context_string} [INST] {prompt} [/INST]",
-     stop=["[INST]", "</s>"],
+     prompt= f"Continue the adventurous story, but finish your answer on a scenario the user can continue to take action from. Add elements of surprise and danger: \n{context_string} [INST] {prompt} [/INST]",
+     stop=["[INST]", "</s>", "."],
   )
 
   answer = response_json['output']['choices'][0]['text']
   answer = answer.strip()
-  print(answer)
   return answer
 
 # context = [

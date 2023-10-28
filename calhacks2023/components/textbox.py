@@ -1,26 +1,15 @@
 import reflex as rx
 from calhacks2023.state import State
-
-box_style = {
-    "width": "800px;",
-}
-input_style = {
-    "height": "200px;",
-    "width:": "350px",
-    "text-align": "left;",
-}
+from .styles import *
 
 
 class FormState(State):
 
     # The current question being asked.
     question: str
-    form_data: dict = {}
 
     # Keep track of the chat history as a list of (question, answer) tuples.
     chat_history: list[tuple[str, str]] = []
-    chat_history.append(("what is a person", "bro I dont know"))
-    chat_history.append(("what is a person", "bro I dont know"))
 
     def set_question(self, input):
         self.question = input
@@ -40,15 +29,23 @@ def setFormState(state: FormState):
 def qa(question, answer) -> rx.Component:   
     return rx.container(
         rx.box(
-            question,
-            # The user's question is on the right.
-            text_align="right",
+            rx.box(
+                question,
+                # The user's question is on the right.
+                text_align="right",
+                style=chat_style.get("question"),
+            ),
+            style=chat_style.get("question_row")
         ),
         rx.box(
-            answer,
-            # The answer is on the left.
-            text_align="left",
-        ),
+            rx.box(
+                answer,
+                # The answer is on the left.
+                text_align="left",
+                style=chat_style.get("answer"),
+            ),
+            style=chat_style.get("answer_row")
+        )
     )
 
 
@@ -57,7 +54,8 @@ def chat() -> rx.Component:
         rx.foreach(
             FormState.chat_history,
             lambda messages: qa(messages[0], messages[1]),
-        )
+        ),
+        style=chat_style,
     )
 
 
@@ -73,6 +71,7 @@ def action_bar() -> rx.Component:
             on_click=FormState.answer,
             # style=style.button_style,
         ),
+        style=action_style,
     )
 
 

@@ -3,6 +3,8 @@ action_style = {
 }
 chat_style = {
     "width": "100%",
+    "height": "550px",
+    "overflow-y": "scroll",
     "question_row": {
         "display": "flex",
         "flex-direction": "row",

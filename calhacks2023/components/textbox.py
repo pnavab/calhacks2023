@@ -43,7 +43,6 @@ def setFormState(state: FormState):
     FormState = state
 
 def qa(question, answer, image_code) -> rx.Component:
-def qa(question, answer) -> rx.Component:   
     return rx.container(
       rx.box(
         rx.box(

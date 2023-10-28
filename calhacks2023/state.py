@@ -14,8 +14,8 @@ class State(rx.State):
     tabs: list[str] = []
     chats: dict[str, list[str, list[dict[str, str]]]] = {}
 
-    scenarios = ["You are stranded on an island...", "You are in a dark forest...",
-                 "You are in a field...", "You are in a mansion..."]
+    scenarios = ["You are stranded on an island and don't remember how you got there. To your left is a coconut and a half sharpened rock that looks like someone else tried shaping into a knife. You hear a faint but aggressive pack of monkeys howling in the distance...", "You are lost in a forest, with no tools or weapons. You notice an old box near you, but are unsure whether you should open it...",
+                 "You wake up in a maze with walls 3 times your height. Suddenly, you notice a looming figure emerge from the shadows behind you. It seems to be holding a large club...", "You are in a mansion, yet it seems eerily quiet. It seems abandoned, and you seem to be the only one home yet don't remember how you got there..."]
 
     question: str
     name: str
@@ -83,8 +83,9 @@ class State(rx.State):
             theme = "medieval"
         if not self.name in self.tabs:
           self.tabs.append(self.name)
-          self.chats[self.name] = [theme, [{"user": "I just spawned...", 'model': random.choice(
-              self.scenarios), "image_code": self.default_image_code}]]
+          random_scenario = random.choice(self.scenarios)
+          image_code = get_ai_image(random_scenario, theme)
+          self.chats[self.name] = [theme, [{"user": "I just spawned...", 'model': random_scenario, "image_code": image_code}]]
           self.show = not (self.show)
           self.switch_tabs(self.name)
         else:

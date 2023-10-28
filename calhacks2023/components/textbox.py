@@ -51,7 +51,7 @@ def action_bar() -> rx.Component:
             on_change=State.set_question,
             value=State.question,
             on_key_down=State.enter,
-            background_color="#EEEEEE",
+            background_color=accent_color_one,
             # style=style.input_style,
         ),
         rx.button(

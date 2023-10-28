@@ -34,8 +34,10 @@ class FormState(State):
         """Handle the form submit."""
         self.form_data = form_data
 
+def setFormState(state: FormState):
+    FormState = state
 
-def qa(question, answer) -> rx.Component:
+def qa(question, answer) -> rx.Component:   
     return rx.container(
         rx.box(
             question,

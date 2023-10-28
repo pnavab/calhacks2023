@@ -1,4 +1,4 @@
-"""The home page of the app."""
+"""The landing page."""
 
 from calhacks2023 import styles
 from calhacks2023.templates import template

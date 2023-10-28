@@ -5,7 +5,9 @@ from calhacks2023.state import State
 
 import reflex as rx
 
-
+class SideBarState(State):
+    instances = []
+    
 def sidebar_header() -> rx.Component:
     """Sidebar header.
 
@@ -39,6 +41,38 @@ def sidebar_header() -> rx.Component:
 
 
 
+
+def add_sidebar_item() -> rx.Component:
+
+    # Whether the item is active.
+
+    return rx.link(
+        rx.hstack(
+            rx.text(
+                "Groundhog",
+                height="2.5em",
+                padding="0.5em",
+            ),
+            bg=rx.cond(
+                True,
+                styles.accent_color,
+                "transparent",
+            ),
+            color=rx.cond(
+                True,
+                styles.accent_text_color,
+                styles.text_color,
+            ),
+            border_radius=styles.border_radius,
+            box_shadow=styles.box_shadow,
+            width="100%",
+            padding_x="1em",
+        ),
+        width="100%",
+        overflow_y="auto",
+        align_items="flex-start",
+        padding="0.5em",
+    )
 
 def sidebar_item(text: str, url: str) -> rx.Component:
     """Sidebar item.
@@ -82,7 +116,6 @@ def sidebar_item(text: str, url: str) -> rx.Component:
         width="100%",
     )
 
-
 def sidebar() -> rx.Component:
     """The sidebar.
 
@@ -95,6 +128,7 @@ def sidebar() -> rx.Component:
     return rx.box(
         rx.vstack(
             sidebar_header(),
+            add_sidebar_item(),
             rx.vstack(
                 *[
                     sidebar_item(

@@ -27,17 +27,23 @@ class FormState(State):
 def qa(question, answer) -> rx.Component:
     return rx.container(
         rx.box(
-            question,
-            # The user's question is on the right.
-            text_align="right",
-            style=chat_style.get("question"),
+            rx.box(
+                question,
+                # The user's question is on the right.
+                text_align="right",
+                style=chat_style.get("question"),
+            ),
+            style=chat_style.get("question_row")
         ),
         rx.box(
-            answer,
-            # The answer is on the left.
-            text_align="left",
-            style=chat_style.get("answer"),
-        ),
+            rx.box(
+                answer,
+                # The answer is on the left.
+                text_align="left",
+                style=chat_style.get("answer"),
+            ),
+            style=chat_style.get("answer_row")
+        )
     )
 
 

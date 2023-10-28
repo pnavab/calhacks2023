@@ -35,7 +35,6 @@ def chat() -> rx.Component:
     return rx.box(
         rx.foreach(
             State.chat_history.reverse(),
-            State.chat_history,
             lambda messages: qa(
                 messages["user"], messages["model"], messages["image_code"]),
         ),

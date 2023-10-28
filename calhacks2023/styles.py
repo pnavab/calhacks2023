@@ -6,7 +6,7 @@ primary_color = "#1C1C1C"
 secondary_color = "#020300"
 accent_color_one = "#a4dded"
 accent_color_two = "#A3C9A8"
-accent_color_three = "#50808E"
+accent_color_three = "#A3CEB9"
 
 border_radius = "0.375rem"
 box_shadow = "0px 0px 0px 1px rgba(84, 82, 95, 0.14)"
@@ -63,7 +63,7 @@ stable_styles = {
 
 
 base_style = {
-    "background_color": primary_color,
+    "background_image": f"linear-gradient(271.68deg, {accent_color_one} 0.75%, {accent_color_two} 88.52%)",
     "::-webkit-scrollbar":  {
         "width": "10px;"  # Width of the scrollbar track */
     },
@@ -76,7 +76,7 @@ base_style = {
     },
     "site-title": {
         "font-size": "30px",
-        "color": accent_color_three,
+        "color": accent_color_one,
         "text-align": "center",
         "font-weight": "900",
     },

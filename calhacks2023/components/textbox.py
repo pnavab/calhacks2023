@@ -27,7 +27,7 @@ def qa(question, answer, image_code, index) -> rx.Component:
             ),
             style=stable_styles.get("answer_row")
         ),
-        on_click=State.save_checkpoint(index)
+        on_double_click=State.save_checkpoint(index)
     )
 
 

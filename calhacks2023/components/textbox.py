@@ -33,12 +33,11 @@ def qa(question, answer, image_code, index) -> rx.Component:
 
 def chat() -> rx.Component:
     # print(type(State.chat_history))
-    i = 0
     return rx.box(
         rx.foreach(
-            State.chats[State.cur_chat].reverse(),
-            lambda messages: qa(
-                messages["user"], messages["model"], messages["image_code"]),
+            State.chat_history.reverse(),
+            lambda messages, index: qa(
+                messages["user"], messages["model"], messages["image_code"], index),
         ),
         style=base_style.get("chat-style"),
     )

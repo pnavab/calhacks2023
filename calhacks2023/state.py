@@ -31,9 +31,7 @@ class State(rx.State):
 
     chats[cur_chat] = [default_art_style, [
         {"user": default_user_message, "model": default_model_message, "image_code": default_image_code}]]
-    # Keep track of the chat history as a list of (question, answer) tuples.
-    chat_history: list[dict[str, str]] = [
-        {"user": default_user_message, "model": default_model_message, "image_code": default_image_code}]
+    chat_history: list[dict[str, str]] = chats[cur_chat][1]
 
     def truncate_chat_history(self):
         if len(self.chat_history) <= 20:
@@ -83,16 +81,16 @@ class State(rx.State):
     def save_checkpoint(self, index):
         print(f"double clicked, index is {index}")
         # saves all the context from beginning up until selected point
-        cur_chat_history = self.chats[self.cur_chat][1]
+        cur_chat_history = self.chat_history
         # flip the index since it is passed in flipped from the reverse function
         index = len(cur_chat_history)-index
-        new_context = cur_chat_history[:index]
         old_name = self.cur_chat
-        cur_art_style = self.chats[self.cur_chat][0]
-        self.tabs.pop(self.tabs.index(old_name))
-        self.name = f"Re: {old_name}"
+        new_context = cur_chat_history[:index]
+        tab_index = self.tabs.index(old_name)
+        self.tabs.pop(tab_index)
+        self.name = f"Re: {self.cur_chat}"
         self.tabs.append(self.name)
-        self.chats[self.name] = [cur_art_style, new_context]
-        del self.chats[old_name]
+        self.chats[self.name] = [self.chats[old_name][0], new_context]
         self.switch_tabs(self.name)
+        # cur_art_style = self.chats[self.cur_chat][0]
         # self.chats[new_name] = [cur_art_style, new_context]

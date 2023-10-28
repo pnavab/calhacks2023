@@ -22,6 +22,11 @@ class State(rx.State):
     show: bool = False
     landing: bool = True
 
+    forest: str = "A9A9A9"
+    ocean: str = "black"
+    medieval: str = "#A9A9A9"
+    steampunk: str = "#A9A9A9"
+
     cur_chat = "Default Story"
     tabs.append(cur_chat)
     default_art_style = "cartoon"
@@ -94,3 +99,26 @@ class State(rx.State):
         self.switch_tabs(self.name)
         # cur_art_style = self.chats[self.cur_chat][0]
         # self.chats[new_name] = [cur_art_style, new_context]
+    def toggle_forest(self):
+        self.steampunk = "#A9A9A9"
+        self.medieval = "#A9A9A9"
+        self.ocean = "#A9A9A9"
+        self.forest = "black"
+
+    def toggle_steampunk(self):
+        self.steampunk = "black"
+        self.medieval = "#A9A9A9"
+        self.ocean = "#A9A9A9"
+        self.forest = "#A9A9A9"
+    
+    def toggle_ocean(self):
+        self.steampunk = "#A9A9A9"
+        self.medieval = "#A9A9A9"
+        self.ocean = "black"
+        self.forest = "#A9A9A9"
+
+    def toggle_medieval(self):
+        self.steampunk = "#A9A9A9"
+        self.medieval = "black"
+        self.ocean = "#A9A9A9"
+        self.forest = "#A9A9A9"

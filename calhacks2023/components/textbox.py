@@ -1,5 +1,6 @@
 import reflex as rx
 from calhacks2023.state import State
+from calhacks2023.backend.ai import *
 from .styles import *
 
 
@@ -7,17 +8,25 @@ class FormState(State):
 
     # The current question being asked.
     question: str
+    default_user_message = "I just spawned in"
+    default_model_message = "You are lost in a forest..."
 
     # Keep track of the chat history as a list of (question, answer) tuples.
-    chat_history: list[tuple[str, str]] = []
+    chat_history: list[dict[str, str]] = [{"user": default_user_message, "model": default_model_message}]
+    
+    def truncate_chat_history(self):
+      if len(self.chat_history) <= 20:
+          return self.chat_history
+      return self.chat_history[-20:]
 
     def set_question(self, input):
         self.question = input
 
     def answer(self):
         # Our chatbot is not very smart right now...
-        answer = "I don't know!"
+        answer = get_ai_response(self.truncate_chat_history(), self.question)
         self.chat_history.append((self.question, answer))
+        self.ai_context.append({"user": self.question})
 
     def handle_submit(self, form_data: dict):
         """Handle the form submit."""
@@ -28,24 +37,24 @@ def setFormState(state: FormState):
 
 def qa(question, answer) -> rx.Component:   
     return rx.container(
+      rx.box(
         rx.box(
-            rx.box(
-                question,
-                # The user's question is on the right.
-                text_align="right",
-                style=chat_style.get("question"),
-            ),
-            style=chat_style.get("question_row")
+            question,
+            # The user's question is on the right.
+            text_align="right",
+            style=chat_style.get("question"),
         ),
-        rx.box(
-            rx.box(
-                answer,
-                # The answer is on the left.
-                text_align="left",
-                style=chat_style.get("answer"),
-            ),
-            style=chat_style.get("answer_row")
-        )
+        style=chat_style.get("question_row")
+      ),
+      rx.box(
+          rx.box(
+              answer,
+              # The answer is on the left.
+              text_align="left",
+              style=chat_style.get("answer"),
+          ),
+          style=chat_style.get("answer_row")
+      )
     )
 
 
@@ -53,7 +62,7 @@ def chat() -> rx.Component:
     return rx.box(
         rx.foreach(
             FormState.chat_history,
-            lambda messages: qa(messages[0], messages[1]),
+            lambda messages: qa(messages["user"], messages["model"]),
         ),
         style=chat_style,
     )

@@ -1,5 +1,6 @@
 import reflex as rx
 from calhacks2023.state import State
+from calhacks2023.backend.ai import *
 from .styles import *
 
 
@@ -7,17 +8,21 @@ class FormState(State):
 
     # The current question being asked.
     question: str
+    default_user_message = "I just spawned in"
+    default_model_message = "You are lost in a forest..."
 
     # Keep track of the chat history as a list of (question, answer) tuples.
-    chat_history: list[tuple[str, str]] = []
+    chat_history = [{"user": default_user_message, "model": default_model_message}]
+    ai_context = [{"user": default_user_message, "model": default_model_message}] # Limited to last 20 since AI has a limit
 
     def set_question(self, input):
         self.question = input
 
     def answer(self):
         # Our chatbot is not very smart right now...
-        answer = "I don't know!"
+        answer = get_ai_response(self.ai_context, self.question)
         self.chat_history.append((self.question, answer))
+        self.ai_context.append({"user": self.question})
 
     def handle_submit(self, form_data: dict):
         """Handle the form submit."""
@@ -45,7 +50,7 @@ def chat() -> rx.Component:
     return rx.box(
         rx.foreach(
             FormState.chat_history,
-            lambda messages: qa(messages[0], messages[1]),
+            lambda messages: qa(messages["user"], messages["model"]),
         ),
         style=chat_style,
     )

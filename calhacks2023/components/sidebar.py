@@ -3,12 +3,6 @@
 from calhacks2023 import styles
 from calhacks2023.state import State
 import reflex as rx
-    
-class ModalState(State):
-    show: bool = False
-
-    def change(self):
-        self.show = not (self.show)
 
 def sidebar_header() -> rx.Component:
     """Sidebar header.
@@ -49,32 +43,37 @@ def add_sidebar_item() -> rx.Component:
     # Whether the item is active.
 
     return rx.link(
-        rx.button("Start anew", on_click=ModalState.change),
+        rx.button("Start anew", on_click=State.change),
         rx.modal(
         rx.modal_overlay(
             rx.modal_content(
                 rx.modal_header("Confirm"),
-                rx.modal_body(
-                    "Do you want to confirm example?"
-                ),
+                 rx.input(
+            placeholder="Enter your story name:",
+            on_change=State.set_name,
+            # style=style.input_style,
+        ),
                 rx.modal_footer(
                     rx.box(
                         rx.button(
-                        "Confirm", on_click=ModalState.change,
+                        "Start", on_click=State.create_new,
                     ), padding = "0.5rem"
                     ),
                     rx.button(
-                        "Close", on_click=ModalState.change
+                        "Close", on_click=State.change
                     )
                 ),
             )
         ),
-        is_open=ModalState.show,
+        is_open=State.show,
         ),
         overflow_y="auto",
         align_items="flex-start",
         padding="0.5em",
     )
+# def save_and_close():
+#         State.create_new
+#         ModalState.change
 
 def sidebar_item(text: str, url: str) -> rx.Component:
     """Sidebar item.

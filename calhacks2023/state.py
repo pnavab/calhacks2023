@@ -8,7 +8,13 @@ class State(rx.State):
     The base state is used to store general vars used throughout the app.
     """
 # The current question being asked.
+    tabs = []
+    chats : dict[str, list[str, list[dict[str, str]]]] = {}
+
     question: str
+    name: str
+    show: bool = False
+
     default_art_style = "cartoon"
     default_user_message = "I just spawned in"
     default_model_message = "You are lost in a forest, with no tools or weapons. You notice an old box near you, but are unsure whether you should open it..."
@@ -43,3 +49,15 @@ class State(rx.State):
     def save_checkpoint(self):
         # saves all the context from beginning up until selected point
         new_context = self.chat_history[:3]
+
+    def set_name(self, input):
+        self.name = input
+
+    def create_new(self):
+        self.tabs.append(self.name)
+        self.chats[self.name] = ["cartoon", {"user": "I just spawned", 'model': "You are stranded on an island..."}]
+        self.show = not (self.show)
+
+
+    def change(self):
+        self.show = not (self.show)

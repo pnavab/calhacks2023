@@ -2,6 +2,7 @@
 
 from calhacks2023 import styles
 from calhacks2023.pages import landing
+from calhacks2023.state import State
 import reflex as rx
 
 def index() -> rx.Component:

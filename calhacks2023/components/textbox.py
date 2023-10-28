@@ -4,7 +4,6 @@ from calhacks2023.backend.ai import *
 from .styles import *
 
 
-
 def qa(question, answer, image_code) -> rx.Component:
     return rx.container(
         rx.box(

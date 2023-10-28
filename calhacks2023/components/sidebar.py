@@ -28,6 +28,7 @@ def sidebar_header() -> rx.Component:
                 _hover={
                     "bg": styles.accent_color,
                 },
+
             ),
             href="https://github.com/reflex-dev/reflex",
         ),
@@ -45,42 +46,49 @@ def add_sidebar_item() -> rx.Component:
         rx.button("Start anew", on_click=State.change,
                   style=styles.base_style.get("cool_buttons")),
         rx.modal(
-        rx.modal_overlay(
-            rx.modal_content(
-                rx.modal_header("What kind of story do you want to live?"),
-                 rx.input(
-                placeholder="Enter your story name:",
-                on_change=State.set_name,
-                # style=style.input_style,
-                ),
-                rx.menu(
-                    rx.box(
-                        rx.menu_button("Theme", style=styles.base_style.get("ask_button"), border_radius="2rem", ),
+            rx.modal_overlay(
+                rx.modal_content(
+                    rx.modal_header("What kind of story do you want to live?"),
+                    rx.input(
+                        placeholder="Enter your story name:",
+                        on_change=State.set_name,
+                        # style=style.input_style,
                     ),
-                    rx.menu_list(
-                    rx.menu_item("Ocean", color = State.ocean, on_click=State.toggle_ocean, close_on_select=False),
-                    rx.menu_item("Medieval", color = State.medieval, on_click=State.toggle_medieval, close_on_select=False),
-                    rx.menu_item("Forest", color = State.forest, on_click=State.toggle_forest, close_on_select=False),
-                    rx.menu_item("Steampunk", color = State.steampunk, on_click=State.toggle_steampunk, close_on_select=False),
-                    rx.menu_item("Cartoon", color = State.cartoon, on_click=State.toggle_cartoon, close_on_select=False),
+                    rx.menu(
+                        rx.box(
+                            rx.menu_button("Theme", style=styles.base_style.get(
+                                "cool_buttons"), border_radius="2rem", ),
+                            width="3rem"
+                        ),
+                        rx.menu_list(
+                            rx.menu_item(
+                                "Ocean", color=State.ocean, on_click=State.toggle_ocean, close_on_select=False),
+                            rx.menu_item("Medieval", color=State.medieval,
+                                         on_click=State.toggle_medieval, close_on_select=False),
+                            rx.menu_item("Forest", color=State.forest,
+                                         on_click=State.toggle_forest, close_on_select=False),
+                            rx.menu_item("Steampunk", color=State.steampunk,
+                                         on_click=State.toggle_steampunk, close_on_select=False),
+                            rx.menu_item("Cartoon", color=State.cartoon,
+                                         on_click=State.toggle_cartoon, close_on_select=False),
+                        ),
+                        match_width=True,
+                        padding="0.5em",
+                        auto_select=False,
                     ),
-                    match_width = True,
-                    padding = "0.5em",
-                    auto_select = False,
-                ),               
-                rx.modal_footer(
-                    rx.box(
+                    rx.modal_footer(
+                        rx.box(
+                            rx.button(
+                                "Start", on_click=State.create_new,
+                            ), padding="0.5rem"
+                        ),
                         rx.button(
-                        "Start", on_click=State.create_new,
-                    ), padding = "0.5rem"
+                            "Close", on_click=State.change
+                        )
                     ),
-                    rx.button(
-                        "Close", on_click=State.change
-                    )
-                ),
-            )
-        ),
-        is_open=State.show,
+                )
+            ),
+            is_open=State.show,
         ),
         overflow_y="auto",
         align_items="flex-start",

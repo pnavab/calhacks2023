@@ -27,17 +27,18 @@ def qa(question, answer, image_code, index) -> rx.Component:
             ),
             style=stable_styles.get("answer_row")
         ),
-        on_double_click=State.save_checkpoint(index)
+        on_click=State.save_checkpoint(index)
     )
 
 
 def chat() -> rx.Component:
-    print(type(State.chat_history))
+    # print(type(State.chat_history))
+    i = 0
     return rx.box(
         rx.foreach(
-            State.chat_history.reverse(),
-            lambda message, index: qa(
-                message["user"], message["model"], message["image_code"], index),
+            State.chats[State.cur_chat].reverse(),
+            lambda messages: qa(
+                messages["user"], messages["model"], messages["image_code"]),
         ),
         style=base_style.get("chat-style"),
     )

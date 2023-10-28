@@ -39,7 +39,11 @@ class FormState(State):
     def save_checkpoint(self):
         new_context = self.chat_history[:3] #saves all the context from beginning up until selected point
 
+def setFormState(state: FormState):
+    FormState = state
+
 def qa(question, answer, image_code) -> rx.Component:
+def qa(question, answer) -> rx.Component:   
     return rx.container(
       rx.box(
         rx.box(

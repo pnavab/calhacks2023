@@ -10,9 +10,10 @@ class FormState(State):
     question: str
     default_user_message = "I just spawned in"
     default_model_message = "You are lost in a forest, with no tools or weapons. You notice an old box near you, but are unsure whether you should open it..."
+    default_image_code = get_ai_image(default_model_message)
 
     # Keep track of the chat history as a list of (question, answer) tuples.
-    chat_history: list[dict[str, str]] = [{"user": default_user_message, "model": default_model_message}]
+    chat_history: list[dict[str, str]] = [{"user": default_user_message, "model": default_model_message, "image_code": default_image_code}]
     
     def truncate_chat_history(self):
       if len(self.chat_history) <= 20:
@@ -23,18 +24,22 @@ class FormState(State):
         self.question = input
 
     def answer(self):
-        # Our chatbot is not very smart right now...
-        self.chat_history.append({"user": self.question, "model": "loading"})
-        answer = get_ai_response(self.truncate_chat_history(), self.question)
-        self.chat_history[-1]["model"] = answer
+        self.chat_history.append({"user": self.question, "model": "loading", "image_code": ""})
+        ai_answer = get_ai_response(self.truncate_chat_history(), self.question)
+        print(f"answer is {ai_answer}")
+        image_code = get_ai_image(ai_answer)
+        self.chat_history[-1]["model"] = ai_answer
+        self.chat_history[-1]["image_code"] = image_code
 
 
     def handle_submit(self, form_data: dict):
         """Handle the form submit."""
         self.form_data = form_data
 
+    def save_checkpoint(self):
+        new_context = self.chat_history[:3] #saves all the context from beginning up until selected point
 
-def qa(question, answer) -> rx.Component:
+def qa(question, answer, image_code) -> rx.Component:
     return rx.container(
       rx.box(
         rx.box(
@@ -53,7 +58,11 @@ def qa(question, answer) -> rx.Component:
               style=chat_style.get("answer"),
           ),
           style=chat_style.get("answer_row")
-      )
+      ),
+      rx.box(
+        rx.image(src=f'data:image/png;base64,{image_code}')
+      ),
+      on_click=FormState.save_checkpoint
     )
 
 
@@ -61,7 +70,7 @@ def chat() -> rx.Component:
     return rx.box(
         rx.foreach(
             FormState.chat_history,
-            lambda messages: qa(messages["user"], messages["model"]),
+            lambda messages: qa(messages["user"], messages["model"], messages["image_code"]),
         ),
         style=chat_style,
     )

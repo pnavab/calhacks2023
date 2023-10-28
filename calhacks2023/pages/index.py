@@ -1,10 +1,8 @@
 """The home page of the app."""
 
 from calhacks2023 import styles
-from calhacks2023.templates import template
-from calhacks2023.pages import dashboard
+from calhacks2023.pages import landing
 import reflex as rx
 
-@template(route="/", title="Home")
 def index() -> rx.Component:
-    return dashboard()
+    return landing()

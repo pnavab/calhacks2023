@@ -2,8 +2,13 @@
 
 from calhacks2023 import styles
 from calhacks2023.state import State
+from calhacks2023.components.textbox import FormState
 
 import reflex as rx
+
+class saveData():
+    url = ""
+    state = None
 
 class SideBarState(State):
     instances = []
@@ -47,28 +52,7 @@ def add_sidebar_item() -> rx.Component:
     # Whether the item is active.
 
     return rx.link(
-        rx.hstack(
-            rx.text(
-                "Groundhog",
-                height="2.5em",
-                padding="0.5em",
-            ),
-            bg=rx.cond(
-                True,
-                styles.accent_color,
-                "transparent",
-            ),
-            color=rx.cond(
-                True,
-                styles.accent_text_color,
-                styles.text_color,
-            ),
-            border_radius=styles.border_radius,
-            box_shadow=styles.box_shadow,
-            width="100%",
-            padding_x="1em",
-        ),
-        width="100%",
+        rx.button("New Story"),
         overflow_y="auto",
         align_items="flex-start",
         padding="0.5em",
@@ -124,7 +108,6 @@ def sidebar() -> rx.Component:
     """
     # Get all the decorated pages and add them to the sidebar.
     from reflex.page import get_decorated_pages
-
     return rx.box(
         rx.vstack(
             sidebar_header(),
@@ -136,6 +119,7 @@ def sidebar() -> rx.Component:
                         url=page["route"],
                     )
                     for page in get_decorated_pages()
+                    if page.get("title", page["route"].strip("/").capitalize()) != "Home"
                 ],
                 width="100%",
                 overflow_y="auto",

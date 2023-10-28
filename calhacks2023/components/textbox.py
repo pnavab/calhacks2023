@@ -49,6 +49,7 @@ def action_bar() -> rx.Component:
             placeholder="Ask a question",
             on_change=State.set_question,
             value=State.question,
+            on_key_down=State.enter
             # style=style.input_style,
         ),
         rx.button(

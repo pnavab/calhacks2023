@@ -22,8 +22,12 @@ class State(rx.State):
     show: bool = False
     landing: bool = True
 
-    forest: str = "A9A9A9"
-    ocean: str = "A9A9A9"
+    accent_color_one = "#a4dded"
+    accent_color_two = "#A3C9A8"
+    accent_color_three = "#50808E"
+
+    forest: str = "#A9A9A9"
+    ocean: str = "#A9A9A9"
     medieval: str = "#A9A9A9"
     steampunk: str = "#A9A9A9"
     cartoon: str = "#A9A9A9"
@@ -68,15 +72,15 @@ class State(rx.State):
 
     def create_new(self):
         theme = ""
-        if(self.forest == "black"):
+        if (self.forest == "black"):
             theme = "forest"
-        elif(self.steampunk == "black"):
+        elif (self.steampunk == "black"):
             theme = "steampunk"
-        elif(self.ocean == "black"):
+        elif (self.ocean == "black"):
             theme = "ocean"
-        elif(self.cartoon == "black"):
+        elif (self.cartoon == "black"):
             theme = "cartoon"
-        elif(self.medieval == "black"):
+        elif (self.medieval == "black"):
             theme = "medieval"
         self.tabs.append(self.name)
         self.chats[self.name] = [theme, [{"user": "I just spawned...", 'model': random.choice(
@@ -125,7 +129,7 @@ class State(rx.State):
         self.ocean = "#A9A9A9"
         self.forest = "#A9A9A9"
         self.cartoon = "#A9A9A9"
-    
+
     def toggle_ocean(self):
         self.steampunk = "#A9A9A9"
         self.medieval = "#A9A9A9"
@@ -139,6 +143,7 @@ class State(rx.State):
         self.ocean = "#A9A9A9"
         self.forest = "#A9A9A9"
         self.cartoon = "#A9A9A9"
+
     def toggle_cartoon(self):
         self.steampunk = "#A9A9A9"
         self.medieval = "#A9A9A9"

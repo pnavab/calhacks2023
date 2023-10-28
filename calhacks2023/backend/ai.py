@@ -4,6 +4,7 @@ import os
 import requests
 import together
 import base64
+import re
 
 together.api_key="0293565af33ec96cf7ccd0b83ef5ff381d673d58781ad5ee0a7841dcf0a66504"
 
@@ -42,4 +43,25 @@ def get_ai_image(prompt, art_style):
   #  print(f"output is {output}")
    return output
 
-# get_ai_image("spaceships")
+def get_sentiment_colors(prompt):
+  response_json = together.Complete.create(
+     model= "togethercomputer/llama-2-13b-chat",
+     prompt= f"[INST] Generate and return ONLY 2 hex codes for colors that represent the overall mood and setting of the following scenario: '{prompt}' [/INST]",
+     stop=["[INST]", "</s>"],
+     max_tokens=200
+  )
+
+  answer = response_json['output']['choices'][0]['text']
+  answer = answer.strip()
+  print("answer is", answer)
+  return answer
+
+def get_hex_codes(prompt):
+  response = get_sentiment_colors(prompt)
+  pattern = r'#([A-Fa-f0-9]{6})'
+  
+    # Use re.findall to find all matching patterns in the output
+  hex_codes = re.findall(pattern, response)
+  if len(hex_codes) < 2:
+    return ['000000', 'ffffff']
+  return hex_codes

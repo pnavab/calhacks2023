@@ -5,6 +5,12 @@ from .state import State
 
 primary_color = "#1C1C1C"
 secondary_color = "#020300"
+<< << << < HEAD
+== == == =
+accent_color_one = "#a4dded"
+accent_color_two = "#A3C9A8"
+accent_color_three = "#A3CEB9"
+>>>>>> > f345c0d7d87d8562cf28329df0e015e9acb90973
 
 border_radius = "0.375rem"
 box_shadow = "0px 0px 0px 1px rgba(84, 82, 95, 0.14)"
@@ -61,8 +67,7 @@ stable_styles = {
 
 
 base_style = {
-    "transition": "5s",
-    "background_color": primary_color,
+    "background_image": f"linear-gradient(271.68deg, {accent_color_one} 0.75%, {accent_color_two} 88.52%)",
     "::-webkit-scrollbar":  {
         "width": "10px;"  # Width of the scrollbar track */
     },
@@ -105,10 +110,24 @@ base_style = {
         "background-color": State.accent_color_three,
         "border-radius": "10px",
         "border": f"1px solid {secondary_color}",
+        << << << < HEAD
         "box_shadow": f"0px 0px 1px 0px {State.accent_color_one}"
+        == == == =
+        "box_shadow": f"0px 0px 1px 0px {accent_color_one}",
+        "padding": "10px 12px",
+        >>>>>> > f345c0d7d87d8562cf28329df0e015e9acb90973
     },
     "chat-container": {
         "border": f"1px solid {secondary_color}"
+    },
+    "ask_button": {
+        "background-color": accent_color_three,
+        "border-radius": "10px",
+        "border": f"1px solid {secondary_color}",
+        "box_shadow": f"0px 0px 1px 0px {accent_color_one}",
+        "padding": "10px",
+        "margin-left": "10em",
+        "margin-top": "2em",
     }
 }
 

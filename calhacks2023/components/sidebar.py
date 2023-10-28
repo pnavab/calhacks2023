@@ -55,8 +55,7 @@ def add_sidebar_item() -> rx.Component:
                 ),
                 rx.menu(
                     rx.box(
-                        rx.menu_button("Theme", style=styles.base_style.get("cool_buttons"), border_radius="2rem", ),
-                        width="3rem"
+                        rx.menu_button("Theme", style=styles.base_style.get("ask_button"), border_radius="2rem", ),
                     ),
                     rx.menu_list(
                     rx.menu_item("Ocean", color = State.ocean, on_click=State.toggle_ocean, close_on_select=False),

@@ -55,9 +55,6 @@ class State(rx.State):
         """Handle the form submit."""
         self.form_data = form_data
 
-    def save_checkpoint(self):
-        # saves all the context from beginning up until selected point
-        new_context = self.chat_history[:3]
 
     def set_name(self, input):
         self.name = input
@@ -78,3 +75,17 @@ class State(rx.State):
     def enter(self,key):
         if key == 'Enter':
             self.answer()
+
+    def save_checkpoint(self, index):
+        
+        print(f"double clicked, index is {index}")
+        # saves all the context from beginning up until selected point
+        cur_chat_history = self.chats[self.cur_chat][1]
+        # flip the index since it is passed in flipped from the reverse function
+        index = len(cur_chat_history)-index 
+        new_context = cur_chat_history[:index]
+        new_name = f"Re: {self.cur_chat}"
+        cur_art_style = self.chats[self.cur_chat][0]
+        self.tabs.append(new_name)
+        self.chats[new_name] = [cur_art_style, new_context]
+        self.switch_tabs(new_name)

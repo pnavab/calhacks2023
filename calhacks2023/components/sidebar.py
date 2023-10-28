@@ -54,13 +54,19 @@ def add_sidebar_item() -> rx.Component:
                 # style=style.input_style,
                 ),
                 rx.menu(
-                    rx.menu_button("Menu"),
-                    rx.menu_list(
-                    rx.menu_item("Example"),
-                    rx.menu_item("Example"),
-                    rx.menu_item("Example"),
+                    rx.box(
+                        rx.menu_button("Theme", style=styles.base_style.get("cool_buttons"), border_radius="2rem", ),
+                        width="3rem"
                     ),
+                    rx.menu_list(
+                    rx.menu_item("Ocean", color = State.ocean, on_click=State.toggle_ocean, close_on_select=False),
+                    rx.menu_item("Medieval", color = State.medieval, on_click=State.toggle_medieval, close_on_select=False),
+                    rx.menu_item("Forest", color = State.forest, on_click=State.toggle_forest, close_on_select=False),
+                    rx.menu_item("Steampunk", color = State.steampunk, on_click=State.toggle_steampunk, close_on_select=False),
+                    ),
+                    match_width = True,
                     padding = "0.5em",
+                    auto_select = False,
                 ),               
                 rx.modal_footer(
                     rx.box(

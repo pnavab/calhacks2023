@@ -6,23 +6,26 @@ chat_style = {
     "question_row": {
         "display": "flex",
         "flex-direction": "row",
-        "justify-content": "left",
+        "justify-content": "right",
+        "margin": "10px 0px",
     },
     "question": {
-        "max-width": "75%",
-        "color": "red;",
-        "background-color": "lightblue",
-        "border-radius": "10px",
-        "padding": "5px 10px",
+        "max-width": "85%",
+        "background-color": "#999999",
+        "border-radius": "10px 10px 0px 10px",
+        "padding": "15px 15px",
     },
     "answer_row": {
         "display": "flex",
         "flex-direction": "row",
-        "justify-content": "right",
+        "justify-content": "left",
+        "margin": "10px 0px",
     },
     "answer": {
-        "max-width": "75%",
-        "color": "blue"
+        "max-width": "85%",
+        "background-color": "#32c4a7",
+        "border-radius": "0px 10px 10px 10px",
+        "padding": "15px 15px",
 
     }
 }

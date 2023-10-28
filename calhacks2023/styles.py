@@ -106,10 +106,20 @@ base_style = {
         "background-color": accent_color_three,
         "border-radius": "10px",
         "border": f"1px solid {secondary_color}",
-        "box_shadow": f"0px 0px 1px 0px {accent_color_one}"
+        "box_shadow": f"0px 0px 1px 0px {accent_color_one}",
+        "padding": "10px 12px",
     },
     "chat-container": {
         "border": f"1px solid {secondary_color}"
+    },
+    "ask_button": {
+        "background-color": accent_color_three,
+        "border-radius": "10px",
+        "border": f"1px solid {secondary_color}",
+        "box_shadow": f"0px 0px 1px 0px {accent_color_one}",
+        "padding": "10px",
+        "margin-left": "10em",
+        "margin-top": "2em",
     }
 }
 

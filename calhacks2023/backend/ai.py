@@ -15,7 +15,7 @@ def get_ai_response(context: list, prompt):
 
   response_json = together.Complete.create(
      model= "togethercomputer/llama-2-7b-chat",
-     prompt= f"Continue the adventurous story, but finish your answer on a scenario the user can continue to take action from. Add elements of surprise and danger, don't repeat points that have already occurred \n{context_string} [INST] {prompt} [/INST]",
+     prompt= f"The following dialogue represents an infinite choose-your-own-adventure story. Answer from the perspective of a narrator in an adventurous way, and keep it exciting and risky. \n{context_string} [INST] {prompt} [/INST]",
      stop=["[INST]", "</s>", "."],
   )
 

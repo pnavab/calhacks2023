@@ -5,6 +5,8 @@ chat_style = {
     "width": "100%",
     "height": "550px",
     "overflow-y": "scroll",
+    "display": "flex",
+    "flex-direction": "column-reverse",
     "question_row": {
         "display": "flex",
         "flex-direction": "row",

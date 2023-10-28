@@ -85,10 +85,11 @@ base_style = {
     },
     "chat-style": {
         "width": "100%",
-        "height": "550px",
+        "height": "40rem",
         "overflow-y": "scroll",
         "display": "flex",
         "flex-direction": "column-reverse",
+        "align-items": "flex-end"
     },
     "cool_buttons": {
         "background-color": "lightgrey",

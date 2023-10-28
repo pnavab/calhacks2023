@@ -4,7 +4,7 @@ from calhacks2023.backend.ai import *
 from calhacks2023.styles import *
 
 
-def qa(question, answer, image_code) -> rx.Component:
+def qa(question, answer, image_code, index) -> rx.Component:
     return rx.container(
         rx.box(
             rx.box(
@@ -27,17 +27,17 @@ def qa(question, answer, image_code) -> rx.Component:
             ),
             style=stable_styles.get("answer_row")
         ),
-        on_click=State.save_checkpoint
+        on_click=State.save_checkpoint(index)
     )
 
 
 def chat() -> rx.Component:
-    print(type(State.chat_history))
+    # print(type(State.chat_history))
     return rx.box(
         rx.foreach(
             State.chat_history.reverse(),
-            lambda messages: qa(
-                messages["user"], messages["model"], messages["image_code"]),
+            lambda messages, index: qa(
+                messages["user"], messages["model"], messages["image_code"], index),
         ),
         style=base_style.get("chat-style"),
     )
@@ -50,7 +50,8 @@ def action_bar() -> rx.Component:
             placeholder="Ask a question",
             on_change=State.set_question,
             value=State.question,
-            on_key_down=State.enter
+            on_key_down=State.enter,
+            background_color="#EEEEEE",
             # style=style.input_style,
         ),
         rx.button(

@@ -1,7 +1,7 @@
 """The home page of the app."""
 
-from code import styles
-from code.templates import template
+from calhacks2023 import styles
+from calhacks2023.templates import template
 
 import reflex as rx
 

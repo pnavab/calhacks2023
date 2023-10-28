@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from code import styles
-from code.components.sidebar import sidebar
+from calhacks2023 import styles
+from calhacks2023.components.sidebar import sidebar
 from typing import Callable
 
 import reflex as rx

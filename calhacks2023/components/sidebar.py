@@ -130,7 +130,7 @@ def sidebar() -> rx.Component:
             add_sidebar_item(),
             rx.vstack(
                 rx.foreach(
-                    State.tabs,
+                    State.tabs.reverse(),
                     lambda tab: sidebar_item(
                         tab),
                     ),

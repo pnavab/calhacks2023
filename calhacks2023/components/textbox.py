@@ -9,7 +9,7 @@ class FormState(State):
     # The current question being asked.
     question: str
     default_user_message = "I just spawned in"
-    default_model_message = "You are lost in a forest..."
+    default_model_message = "You are lost in a forest, with no tools or weapons. You notice an old box near you, but are unsure whether you should open it..."
 
     # Keep track of the chat history as a list of (question, answer) tuples.
     chat_history: list[dict[str, str]] = [{"user": default_user_message, "model": default_model_message}]

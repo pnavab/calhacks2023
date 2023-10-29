@@ -36,6 +36,8 @@ def travel_back_in_time() -> rx.Component:
 
 
 def qa(question, answer, image_code, index) -> rx.Component:
+    print(~State.image_loaded)
+    print(index is 0)
     return rx.container(
         rx.box(
             rx.box(
@@ -46,9 +48,16 @@ def qa(question, answer, image_code, index) -> rx.Component:
             ),
             style=stable_styles.get("question_row")
         ),
-        rx.box(
+        rx.cond(
+            ~ State.image_loaded & index == 0,
+            rx.spinner(
+                color="lightgrey",
+                thickness=2,
+                speed="2s",
+                size="xl",
+            ),
             rx.image(
-                src=f'data:image/png;base64,{image_code}', alt='loading image...')
+                src=f'data:image/png;base64,{image_code}', alt='loading image...'),
         ),
         rx.box(
             rx.box(
@@ -60,7 +69,7 @@ def qa(question, answer, image_code, index) -> rx.Component:
             style=stable_styles.get("answer_row"),
         ),
         travel_back_in_time(),
-        on_double_click=State.show_revert_modal(index),
+        on_double_click=State.show_revert_modal(index)
     )
 
 
@@ -89,7 +98,7 @@ def action_bar() -> rx.Component:
         ),
         rx.button(
             "Ask",
-            on_click=State.handle_answer,
+            on_click=State.answer,
             style=base_style.get("cool_buttons"),
             margin="5px"
         ),

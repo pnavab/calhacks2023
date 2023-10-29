@@ -87,7 +87,7 @@ base_style = {
         "box_shadow": f"0px 0px 1px 0px {State.accent_color_one}",
         "color": "white",
         "mix-blend-mode": "luminosity",
-        "font-weight" : "600",
+        "font-weight": "600",
         "background-color": State.accent_color_two,
     },
     "answer": {
@@ -96,13 +96,13 @@ base_style = {
         "border-radius": "0px 10px 10px 10px",
         "padding": "15px 15px",
         "color": "white",
-        "font-weight" : "600",
+        "font-weight": "600",
         "mix-blend-mode": "luminosity",
         "background-color": State.accent_color_two,
     },
     "chat-style": {
         "width": "125%",
-        "max-height": "45rem",
+        "height": "40rem",
         "overflow-y": "scroll",
         "display": "flex",
         "flex-direction": "column-reverse",
@@ -130,4 +130,3 @@ base_style = {
         "margin-top": "2em",
     },
 }
-

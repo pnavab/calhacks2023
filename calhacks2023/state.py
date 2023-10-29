@@ -22,7 +22,7 @@ class State(rx.State):
     show: bool = False
     show_revert_button = False
     index_to_revert: int = 0
-    temp_question:str 
+    temp_question: str
     loading: bool = True
 
     accent_color_one = "#a4dded"
@@ -45,6 +45,7 @@ class State(rx.State):
         code = get_ai_image(prompt, art_style)
         async with self:
             self.chat_history[-1]["image_code"] = code
+            self.image_loaded = True
 
     forest: str = "#A9A9A9"
     ocean: str = "#A9A9A9"
@@ -71,10 +72,16 @@ class State(rx.State):
     def set_question(self, input):
         self.question = input
 
+    image_loaded: bool = True
+
+    def toggle_loaded(self):
+        self.image_loaded = not (self.image_loaded)
+
     @rx.background
     async def answer(self):
         # self.chats[self.cur_chat][1] is the current chat's chat history
         async with self:
+            self.image_loaded = False
             self.chat_history.append(
                 {"user": self.temp_question, "model": "loading", "image_code": ""})
             ai_answer = get_ai_response(

@@ -13,4 +13,5 @@ def dashboard() -> rx.Component:
         action_bar(),
         background_image=State.gradient_string,
         transition="background-image 10s ease-in-out",
+        border_radius="10px"
     )

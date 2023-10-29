@@ -62,6 +62,7 @@ stable_styles = {
 
 base_style = {
     "background-color": secondary_color,
+    "font-family": "Lato",
     "::-webkit-scrollbar":  {
         "width": "10px;"  # Width of the scrollbar track */
     },

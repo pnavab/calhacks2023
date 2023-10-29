@@ -17,7 +17,7 @@ def get_ai_response(context: list, prompt):
   response_json = together.Complete.create(
      model= "togethercomputer/llama-2-7b-chat",
      prompt= f"The following dialogue represents an infinite choose-your-own-adventure story. Answer from the perspective of a narrator in an adventurous way, and keep it exciting and risky. \n{context_string} [INST] {prompt} [/INST]",
-     stop=["[INST]", "</s>"],
+     stop=["[INST]", "</s>", "What do you do?"],
   )
 
   answer = response_json['output']['choices'][0]['text']
@@ -36,7 +36,7 @@ def get_ai_response(context: list, prompt):
 # response = get_ai_response(context, "in a sudden turn of events, the boy knocks out the wolf")
 
 def get_ai_image(prompt, art_style):
-   padded_prompt = f"in a {art_style} style, draw this scenario: '{prompt}'"
+   padded_prompt = f"in a[n] {art_style} style, draw this scenario: '{prompt}'"
    response = together.Image.create(prompt=padded_prompt, model="stabilityai/stable-diffusion-xl-base-1.0", width=1024, height=512)
    image = response["output"]["choices"][0]
    output = image["image_base64"]
@@ -46,7 +46,7 @@ def get_ai_image(prompt, art_style):
 def get_sentiment_colors(prompt):
   response_json = together.Complete.create(
      model= "togethercomputer/llama-2-13b-chat",
-     prompt= f"[INST] Generate and return ONLY 2 hex codes for colors that represent the overall mood and setting of the following scenario: '{prompt}' [/INST]",
+     prompt= f"[INST] Generate and return ONLY 2 hex codes for light colors that represent the overall mood and setting of the following scenario: '{prompt}' [/INST]",
      stop=["[INST]", "</s>"],
      max_tokens=200
   )

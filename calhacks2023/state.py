@@ -37,7 +37,7 @@ class State(rx.State):
         async with self:
             self.accent_color_one = "#"+colors[0]
             self.accent_color_two = "#"+colors[1]
-            self.gradient_string = f"linear-gradient(271.68deg, {self.accent_color_one} 0.75%, {self.accent_color_two} 88.52%)"
+            self.gradient_string = f"linear-gradient(180.0deg, {self.accent_color_one} 0.75%, {self.accent_color_two} 88.52%)"
 
     @rx.background
     async def set_background_image(self, prompt, art_style):

@@ -97,7 +97,7 @@ def action_bar() -> rx.Component:
             # style=style.input_style,
         ),
         rx.button(
-            "Ask",
+            "Go",
             on_click=State.answer,
             style=base_style.get("cool_buttons"),
             margin="5px"

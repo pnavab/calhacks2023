@@ -46,7 +46,7 @@ def get_ai_image(prompt, art_style):
 def get_sentiment_colors(prompt):
   response_json = together.Complete.create(
      model= "togethercomputer/llama-2-13b-chat",
-     prompt= f"[INST] Generate and return ONLY 2 hex codes for light colors that represent the overall mood and setting of the following scenario: '{prompt}' [/INST]",
+     prompt= f"[INST] Generate and return ONLY 2 hex codes for light colors, no dark colors. They should represent the overall mood and setting of the following scenario: '{prompt}' [/INST]",
      stop=["[INST]", "</s>"],
      max_tokens=200
   )

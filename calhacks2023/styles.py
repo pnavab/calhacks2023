@@ -3,7 +3,7 @@
 import reflex as rx
 from .state import State
 
-primary_color = "#1C1C1C"
+primary_color = "#939799"
 secondary_color = "#020300"
 
 border_radius = "0.375rem"

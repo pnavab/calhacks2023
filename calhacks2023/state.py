@@ -45,8 +45,8 @@ class State(rx.State):
         async with self:
             self.chat_history[-1]["image_code"] = code
 
-    forest: str = "A9A9A9"
-    ocean: str = "A9A9A9"
+    forest: str = "#A9A9A9"
+    ocean: str = "#A9A9A9"
     medieval: str = "#A9A9A9"
     steampunk: str = "#A9A9A9"
     cartoon: str = "#A9A9A9"

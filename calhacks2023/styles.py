@@ -128,19 +128,3 @@ base_style = {
     },
 }
 
-markdown_style = {
-    "code": lambda text: rx.code(text, color="#1F1944", bg="#EAE4FD"),
-    "a": lambda text, **props: rx.link(
-        text,
-        **props,
-        font_weight="bold",
-        color="#03030B",
-        text_decoration="underline",
-        text_decoration_color="#AD9BF8",
-        _hover={
-            "color": "#AD9BF8",
-            "text_decoration": "underline",
-            "text_decoration_color": "#03030B",
-        },
-    ),
-}

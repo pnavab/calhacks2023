@@ -9,18 +9,18 @@ import reflex as rx
 
 # Create the app and compile it.
 app = rx.App(
-    # stylesheets=[
-    #     "https://csshake.surge.sh/csshake.min.css",
-    # ],
+    stylesheets=[
+        "https://fonts.googleapis.com/css?family=Lato",
+    ],
     style=styles.base_style
-    )
+)
 app.api.add_api_route(
-    path = "/",
-    endpoint = root
+    path="/",
+    endpoint=root
 )
 
 app.api.add_api_route(
-  path = "/get-ai-response",
-  endpoint = get_ai_response
+    path="/get-ai-response",
+    endpoint=get_ai_response
 )
 app.compile()

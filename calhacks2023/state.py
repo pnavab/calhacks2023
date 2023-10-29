@@ -28,7 +28,7 @@ class State(rx.State):
     accent_color_two = "#A3C9A8"
     accent_color_three = "lightgrey"
 
-    gradient_string = f"linear-gradient(271.68deg, {accent_color_one} 0.75%, {accent_color_two} 88.52%)"
+    gradient_string = f"linear-gradient(180.0deg, {accent_color_one} 0.75%, {accent_color_two} 88.52%)"
     print(gradient_string)
 
     @rx.background

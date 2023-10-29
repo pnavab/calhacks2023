@@ -43,7 +43,7 @@ def get_ai_response(context: list, prompt):
 def get_ai_image(prompt, art_style):
     padded_prompt = f"in a[n] {art_style} style, draw this scenario: '{prompt}'"
     response = together.Image.create(
-        prompt=padded_prompt, model="stabilityai/stable-diffusion-xl-base-1.0", width=1024, height=512)
+        prompt=padded_prompt, model="stabilityai/stable-diffusion-xl-base-1.0", width=1200, height=600)
     image = response["output"]["choices"][0]
     output = image["image_base64"]
     #  print(f"output is {output}")

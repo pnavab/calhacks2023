@@ -47,7 +47,8 @@ def qa(question, answer, image_code, index) -> rx.Component:
             style=stable_styles.get("question_row")
         ),
         rx.box(
-            rx.image(src=f'data:image/png;base64,{image_code}',alt='loading image...')
+            rx.image(
+                src=f'data:image/png;base64,{image_code}', alt='loading image...')
         ),
         rx.box(
             rx.box(

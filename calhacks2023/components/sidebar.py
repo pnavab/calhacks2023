@@ -54,7 +54,7 @@ def add_sidebar_item() -> rx.Component:
     return rx.link(
         rx.button("Start anew", on_click=State.change,
                   style=styles.base_style.get("cool_buttons"),
-                  margin_left="70px"),
+                  ),
 
         rx.modal(
             rx.modal_overlay(
@@ -127,10 +127,6 @@ def sidebar_item(text: str) -> rx.Component:
     Returns:
         rx.Component: The sidebar item component.
     """
-    # Whether the item is active.
-    active = (State.router.page.path == f"/{text.lower()}") | (
-        (State.router.page.path == "/") & text == "Home"
-    )
 
     return rx.link(
         rx.hstack(

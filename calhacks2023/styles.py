@@ -66,10 +66,11 @@ base_style = {
         "width": "10px;"  # Width of the scrollbar track */
     },
     "::-webkit-scrollbar-track": {
-        "background": primary_color  # /* Background color of the scrollbar track */
+        # /* Background color of the scrollbar track */
+        "background": State.accent_color_one
     },
     "::-webkit-scrollbar-thumb": {
-        "background": secondary_color,  # /* Color of the scrollbar thumb */
+        "background": State.accent_color_two,  # /* Color of the scrollbar thumb */
         "border-radius": "5px",
     },
     "site-title": {
@@ -94,7 +95,7 @@ base_style = {
     },
     "chat-style": {
         "width": "100%",
-        "height": "40rem",
+        "max-height": "45rem",
         "overflow-y": "scroll",
         "display": "flex",
         "flex-direction": "column-reverse",

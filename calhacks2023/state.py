@@ -67,15 +67,17 @@ class State(rx.State):
 
     def answer(self):
         # self.chats[self.cur_chat][1] is the current chat's chat history
+        temp = self.question
+        self.question = ""
         self.chat_history.append(
-            {"user": self.question, "model": "loading", "image_code": ""})
+            {"user": temp, "model": "loading", "image_code": ""})
         ai_answer = get_ai_response(
-            self.truncate_chat_history(), self.question)
+            self.truncate_chat_history(), temp)
         image_code = get_ai_image(ai_answer, self.chats[self.cur_chat][0])
         print(self.chats[self.cur_chat][0])
         self.chat_history[-1]["model"] = ai_answer
         self.chat_history[-1]["image_code"] = image_code
-        self.question = ""
+        temp = ""
         self.change_background_color(self.chat_history[-1]['model'])
 
     def handle_submit(self, form_data: dict):

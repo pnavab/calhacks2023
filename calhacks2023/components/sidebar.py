@@ -13,9 +13,18 @@ def sidebar_header() -> rx.Component:
     """
     return rx.hstack(
         # The logo.
-        rx.box(
-            "Groundhog.Day",
-            style=styles.base_style.get("site-title")
+        rx.hstack(
+            rx.image(
+                src="/mainicon.png",
+                alt="Title Logo",
+                width="75px",
+                height="75px",
+                margin_top="10px"
+            ),
+            rx.box(
+                "Groundhog",
+                style=styles.base_style.get("site-title")
+            )
         ),
         rx.spacer(),
         # Link to Reflex GitHub repo.
@@ -44,7 +53,9 @@ def add_sidebar_item() -> rx.Component:
 
     return rx.link(
         rx.button("Start anew", on_click=State.change,
-                  style=styles.base_style.get("cool_buttons")),
+                  style=styles.base_style.get("cool_buttons"),
+                  margin_left="70px"),
+
         rx.modal(
             rx.modal_overlay(
                 rx.modal_content(
@@ -52,13 +63,19 @@ def add_sidebar_item() -> rx.Component:
                     rx.input(
                         placeholder="Enter your story name:",
                         on_change=State.set_name,
+                        align_self=" center",
+                        width="90%"
                         # style=style.input_style,
                     ),
                     rx.menu(
                         rx.box(
                             rx.menu_button("Theme", style=styles.base_style.get(
-                                "cool_buttons"), border_radius="2rem", ),
-                            width="3rem"
+                                "cool_buttons"), border_radius="10px", ),
+                            width="3rem",
+                            display="flex",
+                            justify_content="center",
+                            align_self="center",
+                            padding_top="0.5em",
                         ),
                         rx.menu_list(
                             rx.menu_item(
@@ -92,7 +109,7 @@ def add_sidebar_item() -> rx.Component:
         ),
         overflow_y="auto",
         align_items="flex-start",
-        padding="0.5em",
+        padding="1em",
     )
 # def save_and_close():
 #         State.create_new

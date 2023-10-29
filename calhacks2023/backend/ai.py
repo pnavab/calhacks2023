@@ -16,7 +16,7 @@ def get_ai_response(context: list, prompt):
 
   response_json = together.Complete.create(
      model= "togethercomputer/llama-2-7b-chat",
-     prompt= f"The following dialogue represents an infinite choose-your-own-adventure story. Answer from the perspective of a narrator in an adventurous way, and keep it exciting and risky. \n{context_string} [INST] {prompt} [/INST]",
+     prompt= f"The following dialogue represents an infinite choose-your-own-adventure story. In three to four sentences, answer from the perspective of a narrator in an adventurous way, and keep it exciting and risky. \n{context_string} [INST] {prompt} [/INST]",
      stop=["[INST]", "</s>", "What do you do?"],
   )
 
@@ -46,7 +46,7 @@ def get_ai_image(prompt, art_style):
 def get_sentiment_colors(prompt):
   response_json = together.Complete.create(
      model= "togethercomputer/llama-2-13b-chat",
-     prompt= f"[INST] Generate and return ONLY 2 hex codes for light toned colors, not very dark colors. They should represent the overall mood and setting of the following scenario: '{prompt}' [/INST]",
+     prompt= f"[INST] Generate and return ONLY two hex codes under #888888 in darkness. They should represent the overall mood and setting of the following scenario: '{prompt}' [/INST]",
      stop=["[INST]", "</s>"],
      max_tokens=200
   )

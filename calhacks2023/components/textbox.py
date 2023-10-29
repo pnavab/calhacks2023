@@ -57,7 +57,7 @@ def qa(question, answer, image_code, index) -> rx.Component:
                 size="xl",
             ),
             rx.image(
-                src=f'data:image/png;base64,{image_code}', alt='loading image...'),
+                src=f'data:image/png;base64,{image_code}', alt='loading image...', border_radius="10px"),
         ),
         rx.box(
             rx.box(
@@ -89,7 +89,7 @@ def action_bar() -> rx.Component:
     return rx.hstack(
 
         rx.input(
-            placeholder="What do you do",
+            placeholder="What do you do?",
             on_change=State.set_question,
             value=State.question,
             on_key_down=State.enter,

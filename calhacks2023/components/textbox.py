@@ -60,7 +60,7 @@ def qa(question, answer, image_code, index) -> rx.Component:
             style=stable_styles.get("answer_row"),
         ),
         travel_back_in_time(),
-        on_double_click=State.show_revert_modal(index)
+        on_double_click=State.show_revert_modal(index),
     )
 
 

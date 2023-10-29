@@ -36,8 +36,6 @@ def travel_back_in_time() -> rx.Component:
 
 
 def qa(question, answer, image_code, index) -> rx.Component:
-    print(~State.image_loaded)
-    print(index is 0)
     return rx.container(
         rx.box(
             rx.box(

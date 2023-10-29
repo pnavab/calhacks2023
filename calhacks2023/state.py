@@ -3,6 +3,7 @@
 import reflex as rx
 from calhacks2023.backend.ai import *
 import random
+import asyncio
 
 
 class State(rx.State):
@@ -23,7 +24,6 @@ class State(rx.State):
     show_revert_button = False
     index_to_revert: int = 0
     temp_question: str
-    loading: bool = True
 
     accent_color_one = "#a4dded"
     accent_color_two = "#A3C9A8"
@@ -86,8 +86,8 @@ class State(rx.State):
                 {"user": self.temp_question, "model": "loading", "image_code": ""})
             ai_answer = get_ai_response(
                 self.truncate_chat_history(), self.temp_question)
-            self.chat_history[-1]["model"] = ai_answer
-            yield State.change_background_color(self.chat_history[-1]['model'])
+            yield State.stream(ai_answer)
+            yield State.change_background_color(ai_answer)
             yield State.set_background_image(ai_answer, self.chats[self.cur_chat][0])
 
     def handle_answer(self):
@@ -204,3 +204,20 @@ class State(rx.State):
         self.ocean = "#A9A9A9"
         self.forest = "#A9A9A9"
         self.cartoon = "black"
+
+    @rx.background
+    async def stream(self, ai_answer):
+        async with self:
+            self.chat_history[-1]["model"] = ""
+
+            for i in range(len(ai_answer)):
+                # Pause to show the streaming effect.
+                random_number = random.uniform(0.05, 0.08)
+                await asyncio.sleep(random_number)
+                # Add one letter at a time to the output.
+                # self.chat_history[-1]["model"][i] = answer[i]
+                self.chat_history[-1]["model"] = ai_answer[0: i]
+                yield
+
+            # self.chats[self.cur_chat][1][-1]["model"] = self.chat_history[0]["model"]
+            # yield

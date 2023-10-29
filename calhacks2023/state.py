@@ -33,12 +33,17 @@ class State(rx.State):
 
     @rx.background
     async def change_background_color(self, prompt):
-        with httpx.AsyncClient() as client:
-          colors = await get_hex_codes(prompt)
-          async with self:
+        colors = get_hex_codes(prompt)
+        async with self:
             self.accent_color_one = "#"+colors[0]
             self.accent_color_two = "#"+colors[1]
             self.gradient_string = f"linear-gradient(271.68deg, {self.accent_color_one} 0.75%, {self.accent_color_two} 88.52%)"
+
+    @rx.background
+    async def set_background_image(self, prompt, art_style):
+        code = get_ai_image(prompt, art_style)
+        async with self:
+            self.chat_history[-1]["image_code"] = code
 
     forest: str = "A9A9A9"
     ocean: str = "A9A9A9"
@@ -65,20 +70,18 @@ class State(rx.State):
     def set_question(self, input):
         self.question = input
 
-    def answer(self):
+    @rx.background
+    async def answer(self):
         # self.chats[self.cur_chat][1] is the current chat's chat history
-        temp = self.question
-        self.question = ""
-        self.chat_history.append(
-            {"user": temp, "model": "loading", "image_code": ""})
-        ai_answer = get_ai_response(
-            self.truncate_chat_history(), temp)
-        image_code = get_ai_image(ai_answer, self.chats[self.cur_chat][0])
-        print(self.chats[self.cur_chat][0])
-        self.chat_history[-1]["model"] = ai_answer
-        self.chat_history[-1]["image_code"] = image_code
-        temp = ""
-        self.change_background_color(self.chat_history[-1]['model'])
+        async with self:
+            self.chat_history.append(
+                {"user": self.question, "model": "loading", "image_code": ""})
+            ai_answer = get_ai_response(
+                self.truncate_chat_history(), self.question)
+            self.chat_history[-1]["model"] = ai_answer
+            yield State.change_background_color(self.chat_history[-1]['model'])
+            yield State.set_background_image(ai_answer, self.chats[self.cur_chat][0])
+            self.question = ""
 
     def handle_submit(self, form_data: dict):
         """Handle the form submit."""
@@ -131,9 +134,9 @@ class State(rx.State):
         self.cur_chat = tab
         self.chat_history = self.chats[tab][1]
 
-    def enter(self, key):
+    async def enter(self, key):
         if key == 'Enter':
-            self.answer()
+            yield State.answer()
 
     def save_checkpoint(self):
         # print(f"double clicked, index is {self.index}")

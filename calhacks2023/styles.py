@@ -84,14 +84,18 @@ base_style = {
         "background-color": State.accent_color_one,
         "border-radius": "10px 10px 0px 10px",
         "padding": "15px 15px",
-        "box_shadow": f"0px 0px 1px 0px {State.accent_color_one}"
+        "box_shadow": f"0px 0px 1px 0px {State.accent_color_one}",
+        "color": "black",
+        "mix-blend-mode": "difference"
     },
     "answer": {
         "max-width": "85%",
         "background-color": State.accent_color_two,
         "border-radius": "0px 10px 10px 10px",
         "padding": "15px 15px",
-        "box_shadow": f"0px 0px 1px 0px {State.accent_color_two}"
+        "box_shadow": f"0px 0px 1px 0px {State.accent_color_two}",
+        "color": "black",
+        "mix-blend-mode": "difference"
     },
     "chat-style": {
         "width": "100%",

@@ -3,8 +3,8 @@
 import reflex as rx
 from .state import State
 
-primary_color = "#939799"
-secondary_color = "#020300"
+primary_color = "#1C1C1C"
+secondary_color = "#939791"
 
 border_radius = "0.375rem"
 box_shadow = "0px 0px 0px 1px rgba(84, 82, 95, 0.14)"
@@ -121,7 +121,6 @@ base_style = {
         "margin-left": "10em",
         "margin-top": "2em",
     },
-
 }
 
 markdown_style = {

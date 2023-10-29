@@ -31,14 +31,14 @@ class State(rx.State):
     gradient_string = f"linear-gradient(271.68deg, {accent_color_one} 0.75%, {accent_color_two} 88.52%)"
     print(gradient_string)
 
-    def change_background_color(self, prompt):
-        colors = get_hex_codes(prompt)
-        self.accent_color_one = "#"+colors[0]
-        print(self.accent_color_one)
-        self.accent_color_two = "#"+colors[1]
-
-        self.gradient_string = f"linear-gradient(271.68deg, {self.accent_color_one} 0.75%, {self.accent_color_two} 88.52%)"
-        print(self.gradient_string)
+    @rx.background
+    async def change_background_color(self, prompt):
+        with httpx.AsyncClient() as client:
+          colors = await get_hex_codes(prompt)
+          async with self:
+            self.accent_color_one = "#"+colors[0]
+            self.accent_color_two = "#"+colors[1]
+            self.gradient_string = f"linear-gradient(271.68deg, {self.accent_color_one} 0.75%, {self.accent_color_two} 88.52%)"
 
     forest: str = "A9A9A9"
     ocean: str = "A9A9A9"

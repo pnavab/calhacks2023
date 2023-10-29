@@ -5,6 +5,7 @@ import requests
 import together
 import base64
 import re
+import httpx
 
 together.api_key="0293565af33ec96cf7ccd0b83ef5ff381d673d58781ad5ee0a7841dcf0a66504"
 
@@ -43,12 +44,12 @@ def get_ai_image(prompt, art_style):
   #  print(f"output is {output}")
    return output
 
-def get_sentiment_colors(prompt):
+async def get_sentiment_colors(prompt):
   response_json = together.Complete.create(
-     model= "togethercomputer/llama-2-13b-chat",
-     prompt= f"[INST] Generate and return ONLY two hex codes under #888888 in darkness. They should represent the overall mood and setting of the following scenario: '{prompt}' [/INST]",
-     stop=["[INST]", "</s>"],
-     max_tokens=200
+    model= "togethercomputer/llama-2-13b-chat",
+    prompt= f"[INST] Generate and return ONLY two hex codes. They should represent the overall mood and setting of the following scenario: '{prompt}' [/INST]",
+    stop=["[INST]", "</s>"],
+    max_tokens=200
   )
 
   answer = response_json['output']['choices'][0]['text']

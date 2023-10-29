@@ -11,6 +11,6 @@ def dashboard() -> rx.Component:
     return rx.vstack(
         chat(),
         action_bar(),
-        transition="background-image 0.5s",
         background_image=State.gradient_string,
+        transition="background-image 10s ease-in-out",
     )

@@ -22,7 +22,8 @@ class State(rx.State):
     show: bool = False
     show_revert_button = False
     index_to_revert: int = 0
-    landing: bool = True
+    temp_question:str 
+    loading: bool = True
 
     accent_color_one = "#a4dded"
     accent_color_two = "#A3C9A8"
@@ -75,13 +76,17 @@ class State(rx.State):
         # self.chats[self.cur_chat][1] is the current chat's chat history
         async with self:
             self.chat_history.append(
-                {"user": self.question, "model": "loading", "image_code": ""})
+                {"user": self.temp_question, "model": "loading", "image_code": ""})
             ai_answer = get_ai_response(
-                self.truncate_chat_history(), self.question)
+                self.truncate_chat_history(), self.temp_question)
             self.chat_history[-1]["model"] = ai_answer
             yield State.change_background_color(self.chat_history[-1]['model'])
             yield State.set_background_image(ai_answer, self.chats[self.cur_chat][0])
-            self.question = ""
+
+    def handle_answer(self):
+        self.temp_question = self.question
+        self.question = ""
+        yield State.answer()
 
     def handle_submit(self, form_data: dict):
         """Handle the form submit."""
@@ -136,6 +141,8 @@ class State(rx.State):
 
     async def enter(self, key):
         if key == 'Enter':
+            self.temp_question = self.question
+            self.question = ""
             yield State.answer()
 
     def save_checkpoint(self):
